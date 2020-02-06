@@ -21,11 +21,7 @@ mybatis:
 #showSql
 logging:
   level:
-    cn:
-      edu:
-        nju:
-          fantasybox:
-            mapper: debug
+    cn.edu.nju.fantasybox.mapper: debug
 
 file-service:
   local: file:/Users/gyue/fantasy-box-data/

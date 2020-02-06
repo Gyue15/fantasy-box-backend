@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -41,19 +43,27 @@ public class ProductServiceImpl implements ProductService {
         hotEntities.forEach(productEntity -> hotModels.add(dozerBeanMapper.map(productEntity, ProductModel.class)));
         productList.add(new ProductListModel(HOT, hotModels));
 
-        System.out.println(hotEntities);
-
         // 找到所有标签
         List<String> tags = tagMapper.selectAllByCount();
         // 找到这些标签对应的产品
-        tags.forEach(tag -> {
-            List<ProductEntity> entities = productMapper.findProductByTypes(tag);
-            List<ProductModel> models = new ArrayList<>();
-            entities.forEach(productEntity -> models.add(dozerBeanMapper.map(productEntity, ProductModel.class)));
-            productList.add(new ProductListModel(tag, models));
-            System.out.println(entities);
+        List<ProductEntity> entities = productMapper.findProductByTagList(tags);
+        Map<String, List<ProductModel>> modelMap = new HashMap<>(tags.size());
+        entities.forEach(productEntity -> {
+            List<ProductModel> modelList = modelMap.getOrDefault(productEntity.getSelectTag(), new ArrayList<>());
+            modelList.add(dozerBeanMapper.map(productEntity, ProductModel.class));
+            modelMap.put(productEntity.getSelectTag(), modelList);
         });
+        tags.forEach(tag -> productList.add(new ProductListModel(tag, modelMap.get(tag))));
 
         return productList;
+    }
+
+    @Override
+    public ProductModel getProduct(long id) {
+        ProductEntity entity = productMapper.select(id);
+        if (entity == null) {
+            return null;
+        }
+        return dozerBeanMapper.map(entity, ProductModel.class);
     }
 }

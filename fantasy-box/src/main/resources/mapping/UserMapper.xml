@@ -9,11 +9,11 @@
         <result property="email" jdbcType="VARCHAR" column="email" />
     </resultMap>
 
-    <select id="select" resultType="cn.edu.nju.fantasybox.entity.UserEntity" resultMap="UserResultMap">
+    <select id="select" resultMap="UserResultMap">
         select * from user where id = #{id}
     </select>
 
-    <select id="selectAll" resultType="cn.edu.nju.fantasybox.entity.UserEntity" resultMap="UserResultMap">
+    <select id="selectAll" resultMap="UserResultMap">
         select * from user
     </select>
 

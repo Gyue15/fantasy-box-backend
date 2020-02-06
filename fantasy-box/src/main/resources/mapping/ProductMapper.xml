@@ -6,12 +6,13 @@
         <result property="id" jdbcType="BIGINT" column="id" />
         <result property="userId" jdbcType="BIGINT" column="user_id" />
         <result property="productName" jdbcType="VARCHAR" column="product_name" />
+        <result property="userName" jdbcType="VARCHAR" column="username" />
         <result property="coverUrl" jdbcType="VARCHAR" column="cover_url" />
         <result property="fileUrl" jdbcType="VARCHAR" column="file_url" />
         <result property="description" jdbcType="VARCHAR" column="description" />
         <result property="releaseTime" jdbcType="TIMESTAMP" column="release_time" />
         <result property="modifyTime" jdbcType="TIMESTAMP" column="modify_time" />
-
+        <result property="selectTag" jdbcType="VARCHAR" column="select_tag"/>
         <!-- tags集合 -->
         <collection property="tagList" ofType="cn.edu.nju.fantasybox.entity.TagEntity">
             <id property="id" column="tid" />
@@ -21,11 +22,9 @@
 
     </resultMap>
 
-    <select id="findProductByTypes" resultType="cn.edu.nju.fantasybox.entity.ProductEntity" resultMap="ProductResultMap">
+    <select id="findProductByTag" resultMap="ProductResultMap">
         SELECT
-            p.*,
-            t.`id` AS tid,
-            t.`tag_name`
+            p.*
         FROM
             product p,
             tag t
@@ -36,11 +35,49 @@
             p.modify_time DESC
     </select>
 
-    <select id="findHotProduct" resultType="cn.edu.nju.fantasybox.entity.ProductEntity" resultMap="ProductResultMap">
+    <select id="findProductByTagList" resultMap="ProductResultMap" parameterType="list">
+        SELECT
+            p.*,
+            t.`tag_name` AS select_tag
+        FROM
+            product p,
+            tag t
+        WHERE
+            p.`id` = t.`product_id`
+            AND t.`tag_name` IN
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+        ORDER BY
+            field( t.tag_name,
+        <foreach item="item" collection="list" separator="," open="" close="" index="">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+             ),
+            p.modify_time DESC
+    </select>
+
+    <select id="findHotProduct" resultMap="ProductResultMap">
         SELECT
             p.*
         FROM
             product p
+        ORDER BY
+            p.modify_time DESC
+            LIMIT #{num}
+    </select>
+
+    <select id="select" resultMap="ProductResultMap">
+        SELECT
+            p.*,
+            t.`id` AS tid,
+            t.`tag_name`
+        FROM
+            product p,
+            tag t
+        WHERE
+            p.id = t.product_id
+            AND p.id = #{id}
         ORDER BY
             p.modify_time DESC
             LIMIT #{num}

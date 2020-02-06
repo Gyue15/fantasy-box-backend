@@ -8,7 +8,11 @@ import java.util.List;
 @Repository
 public interface ProductMapper {
 
-    List<ProductEntity> findProductByTypes(String tagName);
+    List<ProductEntity> findProductByTag(String tagName);
+
+    List<ProductEntity> findProductByTagList(List<String> tagList);
 
     List<ProductEntity> findHotProduct(int num);
+
+    ProductEntity select(long id);
 }

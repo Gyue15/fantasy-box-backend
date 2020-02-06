@@ -1,6 +1,7 @@
 package cn.edu.nju.fantasybox.controller;
 
 import cn.edu.nju.fantasybox.model.ProductListModel;
+import cn.edu.nju.fantasybox.model.ProductModel;
 import cn.edu.nju.fantasybox.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,5 +30,10 @@ public class ProductController {
             hotNum = DEFAULT_HOT_NUM;
         }
         return productService.getAllProductList(hotNum);
+    }
+
+    @GetMapping("get-product")
+    public ProductModel getProduct(@RequestParam("id")Long id) {
+        return productService.getProduct(id);
     }
 }

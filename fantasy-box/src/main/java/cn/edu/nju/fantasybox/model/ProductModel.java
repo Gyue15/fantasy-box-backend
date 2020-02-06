@@ -2,6 +2,9 @@ package cn.edu.nju.fantasybox.model;
 
 import lombok.Data;
 
+import java.util.Date;
+import java.util.List;
+
 @Data
 public class ProductModel {
 
@@ -9,10 +12,18 @@ public class ProductModel {
 
     private String name;
 
+    private String userName;
+
     private String imgUrl;
 
     private String fileUrl;
 
     private String description;
+
+    private Date releaseTime;
+
+    private Date modifyTime;
+
+    private List<String> tagList;
 
 }

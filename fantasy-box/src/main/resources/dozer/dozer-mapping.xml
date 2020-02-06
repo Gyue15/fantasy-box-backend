@@ -2,6 +2,15 @@
 <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://dozer.sourceforge.net
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <configuration>
+        <custom-converters> <!-- these are always bi-directional -->
+            <converter type="cn.edu.nju.fantasybox.configuration.converter.TagConverter" >
+                <class-a>cn.edu.nju.fantasybox.entity.TagEntity</class-a>
+                <class-b>java.lang.String</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+
     <mapping>
         <class-a>cn.edu.nju.fantasybox.entity.ProductEntity</class-a>
         <class-b>cn.edu.nju.fantasybox.model.ProductModel</class-b>
@@ -13,5 +22,6 @@
             <a>productName</a>
             <b>name</b>
         </field>
+
     </mapping>
 </mappings>
