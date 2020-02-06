@@ -1,6 +1,6 @@
 package cn.edu.nju.fantasybox.controller;
 
-import cn.edu.nju.fantasybox.entity.User;
+import cn.edu.nju.fantasybox.entity.UserEntity;
 import cn.edu.nju.fantasybox.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +19,12 @@ public class UserController {
     }
 
     @GetMapping("get-all-users")
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return this.userService.getAllUsers();
     }
 
     @GetMapping("get-user")
-    public User getUser(@RequestParam("id") long id) {
+    public UserEntity getUser(@RequestParam("id") long id) {
         return this.userService.getUser(id);
     }
 }

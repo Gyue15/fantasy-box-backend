@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 05/02/2020 19:36:14
+ Date: 06/02/2020 16:26:29
 */
 
 SET NAMES utf8mb4;
@@ -36,10 +36,13 @@ CREATE TABLE `pay` (
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` bigint NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `product_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `user_id` bigint DEFAULT NULL,
   `file_url` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `cover_url` varchar(255) NOT NULL,
+  `release_time` datetime NOT NULL,
+  `modify_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `p_user_id` (`user_id`),
   CONSTRAINT `p_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

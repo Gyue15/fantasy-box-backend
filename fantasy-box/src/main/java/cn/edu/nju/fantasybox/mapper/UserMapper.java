@@ -1,6 +1,6 @@
 package cn.edu.nju.fantasybox.mapper;
 
-import cn.edu.nju.fantasybox.entity.User;
+import cn.edu.nju.fantasybox.entity.UserEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface UserMapper {
 
-    User select(long id);
+    UserEntity select(long id);
 
-    List<User> selectAll();
+    List<UserEntity> selectAll();
 }

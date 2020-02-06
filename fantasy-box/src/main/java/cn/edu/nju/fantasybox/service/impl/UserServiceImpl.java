@@ -1,6 +1,6 @@
 package cn.edu.nju.fantasybox.service.impl;
 
-import cn.edu.nju.fantasybox.entity.User;
+import cn.edu.nju.fantasybox.entity.UserEntity;
 import cn.edu.nju.fantasybox.mapper.UserMapper;
 import cn.edu.nju.fantasybox.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userMapper.selectAll();
     }
 
     @Override
-    public User getUser(long id) {
+    public UserEntity getUser(long id) {
         return userMapper.select(id);
     }
 }

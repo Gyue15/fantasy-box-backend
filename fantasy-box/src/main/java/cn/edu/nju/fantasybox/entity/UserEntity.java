@@ -3,9 +3,13 @@ package cn.edu.nju.fantasybox.entity;
 import lombok.Data;
 
 @Data
-public class User {
-    private Long id;
+public class UserEntity {
+
+    private long id;
+
     private String userName;
+
     private String passWord;
+
     private String email;
 }
