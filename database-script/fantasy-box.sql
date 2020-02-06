@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 06/02/2020 16:26:29
+ Date: 06/02/2020 19:02:18
 */
 
 SET NAMES utf8mb4;
@@ -49,6 +49,13 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of product
+-- ----------------------------
+BEGIN;
+INSERT INTO `product` VALUES (1, 'test00_product00', 1, '/product00-url', '测试产品00，所属用户test00', '/product00-cover', '2020-02-06 16:38:13', '2020-02-06 16:38:17');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for SPRING_SESSION
 -- ----------------------------
 DROP TABLE IF EXISTS `SPRING_SESSION`;
@@ -84,12 +91,19 @@ CREATE TABLE `SPRING_SESSION_ATTRIBUTES` (
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `id` bigint NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `tag_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `product_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tag_product_id` (`product_id`),
   CONSTRAINT `tag_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tag
+-- ----------------------------
+BEGIN;
+INSERT INTO `tag` VALUES (1, '图片', 1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user
@@ -102,5 +116,12 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+BEGIN;
+INSERT INTO `user` VALUES (1, 'test00', '123456', 'test@test.com');
+COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

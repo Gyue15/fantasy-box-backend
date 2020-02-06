@@ -7,7 +7,7 @@ public class ProductModel {
 
     private long id;
 
-    private String productName;
+    private String name;
 
     private String imgUrl;
 

@@ -9,5 +9,9 @@
             <a>coverUrl</a>
             <b>imgUrl</b>
         </field>
+        <field>
+            <a>productName</a>
+            <b>name</b>
+        </field>
     </mapping>
 </mappings>
