@@ -1,4 +1,4 @@
-package cn.edu.nju.fantasybox.util;
+package cn.edu.nju.fantasybox.configuration;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
