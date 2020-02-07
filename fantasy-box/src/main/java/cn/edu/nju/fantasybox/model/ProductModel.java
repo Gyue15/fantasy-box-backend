@@ -14,6 +14,8 @@ public class ProductModel {
 
     private String userName;
 
+    private String userAvatar;
+
     private String imgUrl;
 
     private String fileUrl;

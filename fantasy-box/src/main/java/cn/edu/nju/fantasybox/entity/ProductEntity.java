@@ -16,6 +16,8 @@ public class ProductEntity {
 
     private String userName;
 
+    private String userAvatar;
+
     private String coverUrl;
 
     private String fileUrl;

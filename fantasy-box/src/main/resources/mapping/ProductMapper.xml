@@ -7,6 +7,7 @@
         <result property="userId" jdbcType="BIGINT" column="user_id" />
         <result property="productName" jdbcType="VARCHAR" column="product_name" />
         <result property="userName" jdbcType="VARCHAR" column="username" />
+        <result property="userAvatar" jdbcType="VARCHAR" column="user_avatar" />
         <result property="coverUrl" jdbcType="VARCHAR" column="cover_url" />
         <result property="fileUrl" jdbcType="VARCHAR" column="file_url" />
         <result property="description" jdbcType="VARCHAR" column="description" />
