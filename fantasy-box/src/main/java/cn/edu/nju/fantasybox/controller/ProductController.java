@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("all-list")
-    public List<ProductListModel> getAllProductList(@RequestParam(name = "hot-num", required = false)Integer hotNum) {
+    public List<ProductListModel> getAllProductList(@RequestParam(name = "hot-num", required = false) Integer hotNum) {
         if (hotNum == null) {
             hotNum = DEFAULT_HOT_NUM;
         }
@@ -33,7 +33,7 @@ public class ProductController {
     }
 
     @GetMapping("get-product")
-    public ProductModel getProduct(@RequestParam("id")Long id) {
+    public ProductModel getProduct(@RequestParam("id") Long id) {
         return productService.getProduct(id);
     }
 }
