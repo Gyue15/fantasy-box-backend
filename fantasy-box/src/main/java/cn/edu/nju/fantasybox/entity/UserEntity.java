@@ -12,4 +12,8 @@ public class UserEntity {
     private String passWord;
 
     private String email;
+
+    private String qrCodeUrl;
+
+    private String avatarUrl;
 }

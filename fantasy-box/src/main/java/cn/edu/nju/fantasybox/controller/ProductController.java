@@ -4,11 +4,10 @@ import cn.edu.nju.fantasybox.model.ProductListModel;
 import cn.edu.nju.fantasybox.model.ProductModel;
 import cn.edu.nju.fantasybox.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,4 +35,17 @@ public class ProductController {
     public ProductModel getProduct(@RequestParam("id") Long id) {
         return productService.getProduct(id);
     }
+
+//    @PostMapping("post-product")
+//    public ProductModel postProduct(@RequestParam("file")MultipartFile file,@RequestParam("description")String description,
+//                                    @RequestParam("title")String title,@RequestParam("tags")List<String> tags){
+//
+//        return new ProductModel();
+//    }
+//
+//    @GetMapping("get-my-product")
+//    public List<ProductModel> getMyProduct(){
+//        return new ArrayList<>();
+//    }
+
 }

@@ -1,5 +1,6 @@
 package cn.edu.nju.fantasybox.mapper;
 
+import cn.edu.nju.fantasybox.entity.TagEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -8,4 +9,6 @@ import java.util.List;
 public interface TagMapper {
 
     List<String> selectAllByCount();
+
+    int insertAll(List<TagEntity> tagEntities);
 }
