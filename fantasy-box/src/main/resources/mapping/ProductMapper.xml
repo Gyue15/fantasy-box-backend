@@ -68,6 +68,12 @@
             LIMIT #{num}
     </select>
 
+    <select id="findProductByUserId" resultMap="ProductResultMap">
+        select p.* from product p
+        left join tag t on t.`product_id`=p.`id`
+        where p.`user_id`=#{userId}
+    </select>
+
     <select id="select" resultMap="ProductResultMap">
         SELECT
             p.*,
@@ -83,5 +89,11 @@
             p.modify_time DESC
             LIMIT #{num}
     </select>
+
+    <insert id="insertProduct" parameterType="cn.edu.nju.fantasybox.entity.ProductEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into product (user_id,product_name,username,user_avatar,file_url,description) values
+         ( #{userId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},
+            #{userAvatar,jdbcType=VARCHAR},#{fileUrl,jdbcType=VARCHAR},#{description,jdbcType=BIGINT})
+    </insert>
 
 </mapper>

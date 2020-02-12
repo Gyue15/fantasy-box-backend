@@ -19,8 +19,8 @@
             count( * ) DESC
     </select>
     
-    <insert id="insertAll" parameterType="cn.edu.nju.fantasybox.entity.TagEntity">
-        insert into tag (product_id,tag_name) values
+    <insert id="insertAll" parameterType="cn.edu.nju.fantasybox.entity.TagEntity" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into tag (product_id,tag_name) values
         <foreach collection="list" item="item" separator=",">
             ( #{item.productId,jdbcType=BIGINT}, #{item.tagName,jdbcType=VARCHAR} )
         </foreach>

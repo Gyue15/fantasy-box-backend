@@ -27,4 +27,21 @@ public class UserController {
     public UserEntity getUser(@RequestParam("id") long id) {
         return this.userService.getUser(id);
     }
+
+    @PostMapping("get-identify-code")
+    public void getIdentifyCode(String email){
+        userService.getIdentifyCode(email);
+    }
+
+    @PostMapping("register")
+    public void register(String username,String password,String email,String identifyCode){
+
+    }
+
+    @PostMapping("login")
+    public void login(String username,String password){
+
+    }
+
+
 }

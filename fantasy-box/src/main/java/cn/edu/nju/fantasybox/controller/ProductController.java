@@ -4,9 +4,12 @@ import cn.edu.nju.fantasybox.model.ProductListModel;
 import cn.edu.nju.fantasybox.model.ProductModel;
 import cn.edu.nju.fantasybox.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,16 +39,19 @@ public class ProductController {
         return productService.getProduct(id);
     }
 
-//    @PostMapping("post-product")
-//    public ProductModel postProduct(@RequestParam("file")MultipartFile file,@RequestParam("description")String description,
-//                                    @RequestParam("title")String title,@RequestParam("tags")List<String> tags){
-//
-//        return new ProductModel();
-//    }
-//
-//    @GetMapping("get-my-product")
-//    public List<ProductModel> getMyProduct(){
-//        return new ArrayList<>();
-//    }
+    @PostMapping("post-product")
+    public ProductModel postProduct(@RequestParam("file")MultipartFile file, @RequestParam("description")String description,
+                                    @RequestParam("title")String title, @RequestParam("tags")List<String> tags, HttpServletRequest request){
+//        HttpSession httpSession = request.getSession();
+//        long userId = (Long)httpSession.getAttribute("userId");
+        return productService.postProduct(file,description,title,tags,1);
+    }
+
+    @GetMapping("get-my-product")
+    public List<ProductModel> getMyProduct(HttpServletRequest request){
+        HttpSession httpSession = request.getSession();
+        long userId = (Long)httpSession.getAttribute("userId");
+        return productService.getMyProduct(userId);
+    }
 
 }

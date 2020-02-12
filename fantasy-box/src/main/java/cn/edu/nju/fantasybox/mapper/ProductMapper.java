@@ -10,7 +10,7 @@ public interface ProductMapper {
 
     List<ProductEntity> findProductByTag(String tagName);
 
-//    List<ProductEntity> findProductByTagList(List<String> tagList);
+    List<ProductEntity> findProductByTagList(List<String> tagList);
 
     List<ProductEntity> findHotProduct(int num);
 
@@ -18,5 +18,5 @@ public interface ProductMapper {
 
     ProductEntity select(long id);
 
-//    ProductEntity insertProduct(ProductEntity productEntity);
+    int insertProduct(ProductEntity productEntity);
 }

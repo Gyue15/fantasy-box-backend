@@ -18,9 +18,10 @@ public class TagMapperTest {
     TagMapper tagMapper;
 
     @Test
+    @Transactional
     public void testInsertAllTags(){
         List<TagEntity> tagEntities = new ArrayList<>();
-        for (int i = 1; i < 6 ; i++) {
+        for (int i = 6; i < 11 ; i++) {
             TagEntity tagEntity = new TagEntity();
             tagEntity.setTagName("tag"+i);
             tagEntity.setProductId(1);

@@ -2,6 +2,7 @@
 server:
   port: 8080
 
+
 spring:
   datasource:
     username: root
@@ -12,6 +13,35 @@ spring:
     store-type: jdbc
     jdbc:
       initialize-schema: always
+  mail:
+    host: smtp.163.com
+    username: shea_wong@163.com
+    password: uw710ekh2875
+    default-encoding: UTF-8
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth=true:
+          auth: true
+          starttls:
+            required: true
+            enable: true
+          socketFactory:
+            fallback: false
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+        debug: true
+  freemarker:
+    template-loader-path: classpath:/templates/
+    charset: UTF-8
+    cache: false
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    suffix: .ftl
+    content-type: text/html
+
 
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
@@ -23,6 +53,6 @@ logging:
     cn.edu.nju.fantasybox.mapper: debug
 
 file-service:
-  local: file:/Users/shea/project/fantasy-box-data/
+  local: /Users/shea/project/fantasy-box-data/
   url-pattern: /file/**
   url-prefix: http://localhost:8080/file/

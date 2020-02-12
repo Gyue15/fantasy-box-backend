@@ -10,4 +10,10 @@ public interface UserService {
     List<UserEntity> getAllUsers();
 
     UserEntity getUser(long id);
+
+    void register(String username,String password,String email);
+
+    void getIdentifyCode(String email);
+
+    void login(String username,String password);
 }

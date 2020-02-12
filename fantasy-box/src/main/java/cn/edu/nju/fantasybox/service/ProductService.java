@@ -12,7 +12,7 @@ public interface ProductService {
 
     ProductModel getProduct(long id);
 
-    List<ProductModel> getMyProduct(int userId);
+    List<ProductModel> getMyProduct(long userId);
 
-    ProductModel postProduct(MultipartFile file,String description,String title,List<String> tags);
+    ProductModel postProduct(MultipartFile file,String description,String title,List<String> tags,long userId);
 }

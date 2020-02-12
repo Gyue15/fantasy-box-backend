@@ -22,6 +22,6 @@ public class FilePathConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(urlPattern).addResourceLocations(localPath);
+        registry.addResourceHandler(urlPattern).addResourceLocations("file:"+localPath);
     }
 }
