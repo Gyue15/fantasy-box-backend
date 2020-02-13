@@ -44,7 +44,7 @@ public class ProductMapperTest {
         int i = 3;
         UserEntity userEntity = userMapper.select(2);
         ProductEntity productEntity = new ProductEntity();
-        productEntity.setUserName(userEntity.getUserName());
+        productEntity.setUsername(userEntity.getUsername());
         productEntity.setUserId(userEntity.getId());
         productEntity.setUserAvatar(userEntity.getAvatarUrl());
         productEntity.setProductName("pro"+i);

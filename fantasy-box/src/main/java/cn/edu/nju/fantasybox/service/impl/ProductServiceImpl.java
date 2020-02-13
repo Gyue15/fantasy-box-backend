@@ -5,13 +5,13 @@ import cn.edu.nju.fantasybox.configuration.FilePathConfig;
 import cn.edu.nju.fantasybox.entity.ProductEntity;
 import cn.edu.nju.fantasybox.entity.TagEntity;
 import cn.edu.nju.fantasybox.entity.UserEntity;
-import cn.edu.nju.fantasybox.exception.InvalidRequestException;
-import cn.edu.nju.fantasybox.exception.MethodFailureException;
+import cn.edu.nju.fantasybox.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.mapper.ProductMapper;
 import cn.edu.nju.fantasybox.mapper.TagMapper;
 import cn.edu.nju.fantasybox.mapper.UserMapper;
 import cn.edu.nju.fantasybox.model.ProductListModel;
 import cn.edu.nju.fantasybox.model.ProductModel;
+import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.service.ProductService;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
                 productEntity.setProductName(title);
                 productEntity.setUserAvatar(userEntity.getAvatarUrl());
                 productEntity.setUserId(userId);
-                productEntity.setUserName(userEntity.getUserName());
+                productEntity.setUsername(userEntity.getUsername());
                 productMapper.insertProduct(productEntity);
                 final long productId = productEntity.getId();
                 //存储标签
@@ -135,10 +135,10 @@ public class ProductServiceImpl implements ProductService {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new MethodFailureException("文件上传出错");
+                throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
             }
         }else {
-            throw new InvalidRequestException("文件不存在");
+            throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
         }
 //        return null;
     }

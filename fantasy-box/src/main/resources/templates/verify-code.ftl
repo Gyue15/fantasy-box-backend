@@ -7,7 +7,8 @@
     <title>fantasy-box</title>
 </head>
 <body>
-    你好，感谢你的注册，这是一封验证邮件，请点击下面的连接完成注册，感谢您的支持。
-    <a href="#" th:href="@{https://github.com/${id}}">激活账户</a>
+    <p>
+        您的验证码为：<strong>${code}</strong>
+    </p>
 </body>
 </html>

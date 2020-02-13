@@ -12,7 +12,7 @@ public class ProductModel {
 
     private String name;
 
-    private String userName;
+    private String username;
 
     private String userAvatar;
 

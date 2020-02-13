@@ -1,15 +1,14 @@
-package cn.edu.nju.fantasybox.entity;
+package cn.edu.nju.fantasybox.model;
 
 import lombok.Data;
 
 @Data
-public class UserEntity {
-
+public class UserModel {
     private long id;
 
     private String username;
 
-    private String password;
+    private String token;
 
     private String email;
 
@@ -17,7 +16,4 @@ public class UserEntity {
 
     private String avatarUrl;
 
-    private String token;
-
-    private Boolean activated;
 }

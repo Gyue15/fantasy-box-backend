@@ -1,5 +1,6 @@
 package cn.edu.nju.fantasybox.controller;
 
+import cn.edu.nju.fantasybox.annotation.UserLoginToken;
 import cn.edu.nju.fantasybox.model.ProductListModel;
 import cn.edu.nju.fantasybox.model.ProductModel;
 import cn.edu.nju.fantasybox.service.ProductService;
@@ -47,6 +48,7 @@ public class ProductController {
         return productService.postProduct(file,description,title,tags,1);
     }
 
+    @UserLoginToken
     @GetMapping("get-my-product")
     public List<ProductModel> getMyProduct(HttpServletRequest request){
         HttpSession httpSession = request.getSession();

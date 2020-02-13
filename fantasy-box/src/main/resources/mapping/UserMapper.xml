@@ -4,19 +4,53 @@
 
     <resultMap id="UserResultMap" type="cn.edu.nju.fantasybox.entity.UserEntity">
         <result property="id" jdbcType="BIGINT" column="id" />
-        <result property="userName" jdbcType="VARCHAR" column="username" />
-        <result property="passWord" jdbcType="VARCHAR" column="password" />
+        <result property="username" jdbcType="VARCHAR" column="username" />
+        <result property="password" jdbcType="VARCHAR" column="password" />
         <result property="email" jdbcType="VARCHAR" column="email" />
         <result property="qrCodeUrl" jdbcType="VARCHAR" column="qr_code_url"/>
         <result property="avatarUrl" jdbcType="VARCHAR" column="avatar_url" />
+        <result property="token" jdbcType="VARCHAR" column="token" />
+        <result property="activated" jdbcType="BIT" column="activated" />
     </resultMap>
 
     <select id="select" resultMap="UserResultMap">
-        select * from user where id = #{id}
+        select * from `user` where id = #{id}
     </select>
 
     <select id="selectAll" resultMap="UserResultMap">
-        select * from user
+        select * from `user`
     </select>
+
+    <select id="findByEmail" resultMap="UserResultMap">
+        select * from `user` where email=#{email}
+    </select>
+
+    <select id="findByUserName" resultMap="UserResultMap">
+        select * from `user` where username=#{username}
+    </select>
+
+    <insert id="insertEmail">
+        insert ignore into `user`(email,token) values (#{email},#{token})
+    </insert>
+
+    <insert id="insertUser" parameterType="cn.edu.nju.fantasybox.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into `user` (username,password,email,token,activated) values
+         ( #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{email},#{token},false )
+    </insert>
+
+    <update id="saveUser"  parameterType="cn.edu.nju.fantasybox.entity.UserEntity">
+        UPDATE `user`
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id!=null">id=#{id},</if>
+            <if test="username!=null">username=#{username},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="qrCodeUrl!=null">qr_code_url=#{qrCodeUrl},</if>
+            <if test="avatarUrl!=null">avatar_url=#{avatarUrl},</if>
+            <if test="token!=null">token=#{token},</if>
+            <if test="activated!=null">activated=#{activated},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
 
 </mapper>

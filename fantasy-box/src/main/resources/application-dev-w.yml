@@ -2,7 +2,6 @@
 server:
   port: 8080
 
-
 spring:
   datasource:
     username: root
@@ -15,14 +14,13 @@ spring:
       initialize-schema: always
   mail:
     host: smtp.163.com
-    username: shea_wong@163.com
-    password: uw710ekh2875
+    username: gyue15@163.com
+    password: gaoyuenju0917
     default-encoding: UTF-8
     port: 465
     properties:
       mail:
         smtp:
-          auth=true:
           auth: true
           starttls:
             required: true
@@ -56,3 +54,6 @@ file-service:
   local: /Users/shea/project/fantasy-box-data/
   url-pattern: /file/**
   url-prefix: http://localhost:8080/file/
+
+local-url: Http://localhost:8080
+active-account-url: ${local-url}/activate-account

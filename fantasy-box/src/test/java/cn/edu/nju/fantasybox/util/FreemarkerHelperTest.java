@@ -18,7 +18,7 @@ public class FreemarkerHelperTest {
     public void testGetTemplateText(){
         Map<String,Object> map = new HashMap<>();
         map.put("id",9287);
-        String text = freemarkerHelper.getMailText(map);
+        String text = freemarkerHelper.getMailText(map,"verify-code.ftl");
         System.out.println(text);
     }
 }

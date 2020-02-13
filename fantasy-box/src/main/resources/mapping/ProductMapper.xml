@@ -6,7 +6,7 @@
         <result property="id" jdbcType="BIGINT" column="id" />
         <result property="userId" jdbcType="BIGINT" column="user_id" />
         <result property="productName" jdbcType="VARCHAR" column="product_name" />
-        <result property="userName" jdbcType="VARCHAR" column="username" />
+        <result property="username" jdbcType="VARCHAR" column="username" />
         <result property="userAvatar" jdbcType="VARCHAR" column="user_avatar" />
         <result property="coverUrl" jdbcType="VARCHAR" column="cover_url" />
         <result property="fileUrl" jdbcType="VARCHAR" column="file_url" />
@@ -92,7 +92,7 @@
 
     <insert id="insertProduct" parameterType="cn.edu.nju.fantasybox.entity.ProductEntity" useGeneratedKeys="true" keyProperty="id">
         insert into product (user_id,product_name,username,user_avatar,file_url,description) values
-         ( #{userId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},
+         ( #{userId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},
             #{userAvatar,jdbcType=VARCHAR},#{fileUrl,jdbcType=VARCHAR},#{description,jdbcType=BIGINT})
     </insert>
 

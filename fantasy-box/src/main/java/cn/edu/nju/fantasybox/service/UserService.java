@@ -1,6 +1,7 @@
 package cn.edu.nju.fantasybox.service;
 
 import cn.edu.nju.fantasybox.entity.UserEntity;
+import cn.edu.nju.fantasybox.model.UserModel;
 
 import java.util.List;
 
@@ -13,7 +14,11 @@ public interface UserService {
 
     void register(String username,String password,String email);
 
-    void getIdentifyCode(String email);
+    void verifyEmail(String email);
 
-    void login(String username,String password);
+    UserModel login(String username, String password);
+
+    String generateRandomCode();
+
+    void activateAccount(String email,String token);
 }
