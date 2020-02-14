@@ -57,14 +57,8 @@ public class UserController {
     @PostMapping("login")
     public ResponseData login(String username, String password, HttpServletRequest request){
         UserModel userModel = userService.login(username,password);
+
         return ResponseDataUtil.buildSuccess(userModel);
-//        boolean flag = userService.login(username,password);
-//        if(flag){
-//            HttpSession session = request.getSession();
-//            System.out.println(session.getId());
-//            //todo 传递sessionID
-//            session.setAttribute(username,System.currentTimeMillis());
-//        }
     }
 
 

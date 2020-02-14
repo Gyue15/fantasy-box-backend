@@ -102,6 +102,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel login(String username, String password) {
+        //todo 持久化公钥和私钥
         UserEntity userEntity = userMapper.findByUserName(username);
         if(userEntity==null || !rsaEncrypt.decrypt(userEntity.getPassword()).equals(password)){
 //        if(userEntity==null || !RSAEncrypt.decrypt(userEntity.getPassword()).equals(password)){
@@ -110,9 +111,9 @@ public class UserServiceImpl implements UserService {
         if(!userEntity.getActivated()){
             throw new BusinessException(ResultEnums.NOT_ACTIVATED);
         }
-        String token = tokenHelper.getToken(userEntity.getId());
-        userEntity.setToken(token);
-        userMapper.saveUser(userEntity);
+//        String token = tokenHelper.getToken(userEntity.getId());
+//        userEntity.setToken(token);
+//        userMapper.saveUser(userEntity);
         return dozerBeanMapper.map(userEntity,UserModel.class);
     }
 

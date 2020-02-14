@@ -8,8 +8,6 @@ public class UserModel {
 
     private String username;
 
-    private String token;
-
     private String email;
 
     private String qrCodeUrl;
