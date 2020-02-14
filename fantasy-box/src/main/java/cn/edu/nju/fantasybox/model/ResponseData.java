@@ -5,15 +5,15 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class ResponseData<T> implements Serializable {
+public class ResponseData implements Serializable {
     private String code;
 
     private String msg;
 
-    private T data;
+    private Object data;
 
 
-    public ResponseData(String code, String msg, T data) {
+    public ResponseData(String code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -29,7 +29,7 @@ public class ResponseData<T> implements Serializable {
         this.msg = resultEnums.getMsg();
     }
 
-    public ResponseData(ResultEnums resultEnums, T data) {
+    public ResponseData(ResultEnums resultEnums, Object data) {
         this.code = resultEnums.getCode();
         this.msg = resultEnums.getMsg();
         this.data = data;

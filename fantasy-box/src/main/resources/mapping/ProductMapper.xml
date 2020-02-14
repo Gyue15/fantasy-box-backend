@@ -69,9 +69,13 @@
     </select>
 
     <select id="findProductByUserId" resultMap="ProductResultMap">
-        select p.* from product p
-        left join tag t on t.`product_id`=p.`id`
-        where p.`user_id`=#{userId}
+        SELECT
+            p.*
+        FROM
+            product p
+            LEFT JOIN tag t ON t.`product_id` = p.`id`
+        WHERE
+            p.`user_id` = #{userId}
     </select>
 
     <select id="select" resultMap="ProductResultMap">
@@ -80,20 +84,19 @@
             t.`id` AS tid,
             t.`tag_name`
         FROM
-            product p,
-            tag t
+            product p
+            LEFT JOIN tag t ON p.id = t.product_id
         WHERE
-            p.id = t.product_id
-            AND p.id = #{id}
+            p.id = #{id}
         ORDER BY
             p.modify_time DESC
-            LIMIT #{num}
     </select>
 
     <insert id="insertProduct" parameterType="cn.edu.nju.fantasybox.entity.ProductEntity" useGeneratedKeys="true" keyProperty="id">
-        insert into product (user_id,product_name,username,user_avatar,file_url,description) values
-         ( #{userId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},
-            #{userAvatar,jdbcType=VARCHAR},#{fileUrl,jdbcType=VARCHAR},#{description,jdbcType=BIGINT})
+        INSERT INTO product ( user_id, product_name, username, user_avatar, file_url, description )
+        VALUES
+            (#{userId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},
+        #{userAvatar,jdbcType=VARCHAR},#{fileUrl,jdbcType=VARCHAR},#{description,jdbcType=BIGINT})
     </insert>
 
 </mapper>

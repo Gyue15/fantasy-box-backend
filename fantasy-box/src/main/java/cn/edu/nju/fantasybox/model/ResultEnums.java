@@ -1,7 +1,6 @@
 package cn.edu.nju.fantasybox.model;
 
 
-import org.springframework.http.HttpStatus;
 
 public enum ResultEnums  {
 

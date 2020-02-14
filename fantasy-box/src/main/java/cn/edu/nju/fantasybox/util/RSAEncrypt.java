@@ -1,11 +1,11 @@
 package cn.edu.nju.fantasybox.util;
 
-import cn.edu.nju.fantasybox.service.UserService;
+import lombok.Cleanup;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -19,45 +19,44 @@ public class RSAEncrypt {
 
     private Map<Integer, String> keyMap = new HashMap<>();  //用于封装随机产生的公钥与私钥
 
-    public RSAEncrypt(){
+    public RSAEncrypt() {
         genKeyPair();
     }
 
     /**
      * 随机生成密钥对
-     * @throws NoSuchAlgorithmException
      */
     public void genKeyPair() {
         // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
-        KeyPairGenerator keyPairGen = null;
+        KeyPairGenerator keyPairGen;
         try {
             keyPairGen = KeyPairGenerator.getInstance("RSA");
+            // 初始化密钥对生成器，密钥大小为96-1024位
+            keyPairGen.initialize(1024, new SecureRandom());
+            // 生成一个密钥对，保存在keyPair中
+            KeyPair keyPair = keyPairGen.generateKeyPair();
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();   // 得到私钥
+            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();  // 得到公钥
+            String publicKeyString = new String(Base64.encodeBase64(publicKey.getEncoded()));
+            // 得到私钥字符串
+            String privateKeyString = new String(Base64.encodeBase64((privateKey.getEncoded())));
+            // 将公钥和私钥保存到Map
+            keyMap.put(0, publicKeyString);  //0表示公钥
+            keyMap.put(1, privateKeyString);  //1表示私钥
+            System.out.println("public key: " + publicKeyString);
+            System.out.println("private key: " + privateKeyString);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        // 初始化密钥对生成器，密钥大小为96-1024位
-        keyPairGen.initialize(1024,new SecureRandom());
-        // 生成一个密钥对，保存在keyPair中
-        KeyPair keyPair = keyPairGen.generateKeyPair();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();   // 得到私钥
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();  // 得到公钥
-        String publicKeyString = new String(Base64.encodeBase64(publicKey.getEncoded()));
-        // 得到私钥字符串
-        String privateKeyString = new String(Base64.encodeBase64((privateKey.getEncoded())));
-        // 将公钥和私钥保存到Map
-        keyMap.put(0,publicKeyString);  //0表示公钥
-        keyMap.put(1,privateKeyString);  //1表示私钥
     }
+
     /**
      * RSA公钥加密
      *
-     * @param str
-     *            加密字符串
+     * @param str 加密字符串
      * @return 密文
-     * @throws Exception
-     *             加密过程中的异常信息
      */
-    public String encrypt( String str){
+    public String encrypt(String str) {
         String publicKey = keyMap.get(0);
         //base64编码的公钥
         byte[] decoded = Base64.decodeBase64(publicKey);
@@ -69,7 +68,7 @@ public class RSAEncrypt {
             //RSA加密
             cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-            outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes("UTF-8")));
+            outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes(StandardCharsets.UTF_8)));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,22 +80,20 @@ public class RSAEncrypt {
     /**
      * RSA私钥解密
      *
-     * @param str
-     *            加密字符串
+     * @param str 加密字符串
      * @return 铭文
-     * @throws Exception
-     *             解密过程中的异常信息
      */
-    public String decrypt(String str){
+    public String decrypt(String str) {
         String privateKey = keyMap.get(1);
         //64位解码加密后的字符串
         byte[] inputByte = new byte[0];
         String outStr = null;
         try {
-            inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
+            inputByte = Base64.decodeBase64(str.getBytes(StandardCharsets.UTF_8));
             //base64编码的私钥
             byte[] decoded = Base64.decodeBase64(privateKey);
-            RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
+            RSAPrivateKey priKey =
+                    (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
             //RSA解密
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, priKey);

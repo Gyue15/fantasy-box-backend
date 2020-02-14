@@ -3,14 +3,14 @@
 <mapper namespace="cn.edu.nju.fantasybox.mapper.UserMapper">
 
     <resultMap id="UserResultMap" type="cn.edu.nju.fantasybox.entity.UserEntity">
-        <result property="id" jdbcType="BIGINT" column="id" />
-        <result property="username" jdbcType="VARCHAR" column="username" />
-        <result property="password" jdbcType="VARCHAR" column="password" />
-        <result property="email" jdbcType="VARCHAR" column="email" />
+        <result property="id" jdbcType="BIGINT" column="id"/>
+        <result property="username" jdbcType="VARCHAR" column="username"/>
+        <result property="password" jdbcType="VARCHAR" column="password"/>
+        <result property="email" jdbcType="VARCHAR" column="email"/>
         <result property="qrCodeUrl" jdbcType="VARCHAR" column="qr_code_url"/>
-        <result property="avatarUrl" jdbcType="VARCHAR" column="avatar_url" />
-        <result property="token" jdbcType="VARCHAR" column="token" />
-        <result property="activated" jdbcType="BIT" column="activated" />
+        <result property="avatarUrl" jdbcType="VARCHAR" column="avatar_url"/>
+        <result property="token" jdbcType="VARCHAR" column="token"/>
+        <result property="activated" jdbcType="BIT" column="activated"/>
     </resultMap>
 
     <select id="select" resultMap="UserResultMap">
@@ -33,12 +33,13 @@
         insert ignore into `user`(email,token) values (#{email},#{token})
     </insert>
 
-    <insert id="insertUser" parameterType="cn.edu.nju.fantasybox.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertUser" parameterType="cn.edu.nju.fantasybox.entity.UserEntity" useGeneratedKeys="true"
+            keyProperty="id">
         insert into `user` (username,password,email,token,activated) values
          ( #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{email},#{token},false )
     </insert>
 
-    <update id="saveUser"  parameterType="cn.edu.nju.fantasybox.entity.UserEntity">
+    <update id="saveUser" parameterType="cn.edu.nju.fantasybox.entity.UserEntity">
         UPDATE `user`
         <trim prefix="set" suffixOverrides=",">
             <if test="id!=null">id=#{id},</if>

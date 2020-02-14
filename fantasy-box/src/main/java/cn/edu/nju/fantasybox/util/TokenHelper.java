@@ -16,7 +16,7 @@ import java.util.Map;
 @Component
 public class TokenHelper {
 
-    private static final int TIME_LIMIT = 1000*60*60*24; //token过期时间24小时
+    private static final int TIME_LIMIT = 1000 * 60 * 60 * 24; //token过期时间24小时
 
     /**
      * 创建一个32-byte的密匙
@@ -24,7 +24,7 @@ public class TokenHelper {
     private static final byte[] secret = ("g3YGj2ufiyeqkytrahgfy72861ksla9L").getBytes();
 
     public String getToken(long userId) {
-        String token="";
+        String token = "";
 //        token= JWT.create().withAudience(Long.toString(user.getId()))// 将 user id 保存到 token 里面
 //                .sign(Algorithm.HMAC256(user.getPassword()));// 以 password 作为 token 的密钥
         Map<String, Object> map = new HashMap<>();
@@ -33,7 +33,7 @@ public class TokenHelper {
         //生成时间
         map.put("sta", new Date().getTime());
         //过期时间
-        map.put("exp", new Date().getTime()+TIME_LIMIT);
+        map.put("exp", new Date().getTime() + TIME_LIMIT);
         try {
             token = createToken(map);
         } catch (JOSEException e) {
@@ -43,7 +43,7 @@ public class TokenHelper {
     }
 
     //生成一个token
-    public String createToken(Map<String,Object> payloadMap) throws JOSEException {
+    public String createToken(Map<String, Object> payloadMap) throws JOSEException {
         //先建立一个头部Header
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);
         //建立一个载荷Payload
@@ -64,16 +64,16 @@ public class TokenHelper {
         //解析token
         JWSObject jwsObject = JWSObject.parse(token);
         //获取到载荷
-        Payload payload=jwsObject.getPayload();
+        Payload payload = jwsObject.getPayload();
         //建立一个解锁密匙
         JWSVerifier jwsVerifier = new MACVerifier(secret);
         JSONObject jsonObject;
-        if(!jwsObject.verify(jwsVerifier)){
+        if (!jwsObject.verify(jwsVerifier)) {
             throw new BusinessException(ResultEnums.TOKEN_PARSE_FAIL);
-        }else {
+        } else {
             jsonObject = payload.toJSONObject();
             Long expTime = (Long) jsonObject.get("exp");
-            Long nowTime = new Date().getTime();
+            long nowTime = new Date().getTime();
             //判断是否过期
             if (nowTime > expTime) {
                 throw new BusinessException(ResultEnums.TOKEN_EXPIRE);

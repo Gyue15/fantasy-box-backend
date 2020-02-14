@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +43,8 @@ public class ProductServiceImpl implements ProductService {
     private FilePathConfig filePathConfig;
 
     @Autowired
-    public ProductServiceImpl(ProductMapper productMapper, TagMapper tagMapper, DozerBeanMapper dozerBeanMapper,UserMapper userMapper) {
+    public ProductServiceImpl(ProductMapper productMapper, TagMapper tagMapper, DozerBeanMapper dozerBeanMapper,
+                              UserMapper userMapper) {
         this.productMapper = productMapper;
         this.tagMapper = tagMapper;
         this.dozerBeanMapper = dozerBeanMapper;
@@ -87,26 +87,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductModel> getMyProduct(long userId) {
         List<ProductEntity> productEntities = productMapper.findProductByUserId(userId);
-        if(productEntities==null){
+        if (productEntities == null) {
             return null;
         }
-        return productEntities.stream()
-                .map(productEntity -> dozerBeanMapper.map(productEntity,ProductModel.class)).collect(Collectors.toList());
+        return productEntities.stream().map(productEntity -> dozerBeanMapper.map(productEntity, ProductModel.class)).collect(Collectors.toList());
     }
 
     @Override
-    public ProductModel postProduct(MultipartFile file, String description, String title, List<String> tags, long userId) {
+    public ProductModel postProduct(MultipartFile file, String description, String title, List<String> tags,
+                                    long userId) {
         // 文件保存路径
-        String filePath = filePathConfig.getLocalPath()+ System.currentTimeMillis()+file.getOriginalFilename();
+        String filePath = filePathConfig.getLocalPath() + System.currentTimeMillis() + file.getOriginalFilename();
         // 文件url
-        String fileUrl = filePathConfig.getUrlPrefix() + System.currentTimeMillis()+file.getOriginalFilename();
+        String fileUrl = filePathConfig.getUrlPrefix() + System.currentTimeMillis() + file.getOriginalFilename();
         if (!file.isEmpty()) {
             try {
                 File dest = new File(filePath);
 
                 // 检测是否存在目录
-                if (!dest.getParentFile().exists()) {
-                    dest.getParentFile().mkdirs();
+                if (!dest.getParentFile().exists() && !dest.getParentFile().mkdirs()) {
+                    throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
                 }
 
                 file.transferTo(dest);
@@ -122,14 +122,14 @@ public class ProductServiceImpl implements ProductService {
                 productMapper.insertProduct(productEntity);
                 final long productId = productEntity.getId();
                 //存储标签
-                List<TagEntity> tagEntities = tags.stream().map(tag->{
+                List<TagEntity> tagEntities = tags.stream().map(tag -> {
                     TagEntity tagEntity = new TagEntity();
                     tagEntity.setProductId(productId);
                     tagEntity.setTagName(tag);
                     return tagEntity;
                 }).collect(Collectors.toList());
                 tagMapper.insertAll(tagEntities);
-                ProductModel productModel = dozerBeanMapper.map(productEntity,ProductModel.class);
+                ProductModel productModel = dozerBeanMapper.map(productEntity, ProductModel.class);
                 productModel.setTagList(tags);
                 return productModel;
 
@@ -137,9 +137,8 @@ public class ProductServiceImpl implements ProductService {
                 e.printStackTrace();
                 throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
             }
-        }else {
+        } else {
             throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
         }
-//        return null;
     }
 }

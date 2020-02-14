@@ -56,4 +56,4 @@ file-service:
   url-prefix: http://localhost:8080/file/
 
 local-url: Http://localhost:8080
-active-account-url: ${local-url}/activate-account
+active-account-url: ${local-url}/api/user/activate-account

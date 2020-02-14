@@ -14,11 +14,7 @@ public interface UserService {
 
     void register(String username,String password,String email);
 
-    void verifyEmail(String email);
-
     UserModel login(String username, String password);
-
-    String generateRandomCode();
 
     void activateAccount(String email,String token);
 }
