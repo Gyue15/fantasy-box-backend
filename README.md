@@ -82,7 +82,7 @@
   #选择配置文件
   spring:
     profiles:
-      active: dev-g
+      active: dev-xx
   ```
   
    

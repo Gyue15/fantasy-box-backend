@@ -15,8 +15,8 @@ spring:
       initialize-schema: always
   mail:
     host: smtp.163.com
-    username: gyue15@163.com
-    password: gaoyuenju0917
+    username: {邮箱名称}
+    password: {邮箱授权码}
     default-encoding: UTF-8
     port: 465
     properties:
