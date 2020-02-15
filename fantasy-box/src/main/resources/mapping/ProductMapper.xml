@@ -95,7 +95,8 @@
     <select id="search" resultMap="ProductResultMap">
         SELECT
             p.*,
-            t.`tag_name` AS select_tag
+            t.`id` AS tid,
+            t.`tag_name`
         FROM
             product p
             LEFT JOIN tag t ON t.`product_id` = p.`id`
