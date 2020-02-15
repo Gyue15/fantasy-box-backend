@@ -57,3 +57,9 @@ file-service:
 
 local-url: Http://localhost:8080
 active-account-url: ${local-url}/api/user/activate-account
+
+key-path:
+  public: /Users/shea/project/fantasy-key/public
+  private: /Users/shea/project/fantasy-key/private
+
+hot-num: 9
