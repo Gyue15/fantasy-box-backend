@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUser(long id) {
+        System.out.println(rsaEncrypt.encrypt("123"));
         return userMapper.select(id);
     }
 

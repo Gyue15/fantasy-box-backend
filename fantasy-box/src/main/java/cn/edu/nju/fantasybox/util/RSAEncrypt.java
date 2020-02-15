@@ -1,12 +1,12 @@
 package cn.edu.nju.fantasybox.util;
 
-import lombok.Cleanup;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
+import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -19,35 +19,21 @@ public class RSAEncrypt {
 
     private Map<Integer, String> keyMap = new HashMap<>();  //用于封装随机产生的公钥与私钥
 
-    public RSAEncrypt() {
-        genKeyPair();
-    }
+    @Value("${private-key}")
+    private String privateKeyPath;
+
+    @Value("${public-key}")
+    private String publicKeyPath;
 
     /**
-     * 随机生成密钥对
+     * 生成密钥对
      */
-    public void genKeyPair() {
-        // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
-        KeyPairGenerator keyPairGen;
-        try {
-            keyPairGen = KeyPairGenerator.getInstance("RSA");
-            // 初始化密钥对生成器，密钥大小为96-1024位
-            keyPairGen.initialize(1024, new SecureRandom());
-            // 生成一个密钥对，保存在keyPair中
-            KeyPair keyPair = keyPairGen.generateKeyPair();
-            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();   // 得到私钥
-            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();  // 得到公钥
-            String publicKeyString = new String(Base64.encodeBase64(publicKey.getEncoded()));
-            // 得到私钥字符串
-            String privateKeyString = new String(Base64.encodeBase64((privateKey.getEncoded())));
-            // 将公钥和私钥保存到Map
-            keyMap.put(0, publicKeyString);  //0表示公钥
-            keyMap.put(1, privateKeyString);  //1表示私钥
-            System.out.println("public key: " + publicKeyString + " end");
-            System.out.println("private key: " + privateKeyString + " end");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+    private void genKeyPair() {
+        String publicKeyString = FileUtil.readFirstLine(publicKeyPath);
+        String privateKeyString = FileUtil.readFirstLine(privateKeyPath);
+        // 将公钥和私钥保存到Map
+        keyMap.put(0, publicKeyString);  //0表示公钥
+        keyMap.put(1, privateKeyString);  //1表示私钥
     }
 
     /**
@@ -57,6 +43,9 @@ public class RSAEncrypt {
      * @return 密文
      */
     public String encrypt(String str) {
+        if (keyMap.size() == 0) {
+            genKeyPair();
+        }
         String publicKey = keyMap.get(0);
         //base64编码的公钥
         byte[] decoded = Base64.decodeBase64(publicKey);
@@ -84,6 +73,9 @@ public class RSAEncrypt {
      * @return 铭文
      */
     public String decrypt(String str) {
+        if (keyMap.size() == 0) {
+            genKeyPair();
+        }
         String privateKey = keyMap.get(1);
         //64位解码加密后的字符串
         byte[] inputByte = new byte[0];
