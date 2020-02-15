@@ -23,7 +23,7 @@ public class MailHelperTest {
         Map<String, Object> map = new HashMap<>();
         map.put("code", "abcdefg");
         String text = freemarkerHelper.getMailText(map, "verify-code.ftl");
-        mailHelper.sendMail("shea_wong@163.com", "验证码", text);
+        mailHelper.sendMail("gyue15@163.com", "验证码", text);
 
     }
 }
