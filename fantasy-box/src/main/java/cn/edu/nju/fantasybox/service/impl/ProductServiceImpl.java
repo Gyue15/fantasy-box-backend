@@ -138,9 +138,10 @@ public class ProductServiceImpl implements ProductService {
                     return tagEntity;
                 }).collect(Collectors.toList());
                 tagMapper.insertAll(tagEntities);
-                ProductModel productModel = dozerBeanMapper.map(productEntity, ProductModel.class);
-                productModel.setTagList(tags);
-                return productModel;
+
+                // 获取更新后的product
+                productEntity = productMapper.select(productId);
+                return dozerBeanMapper.map(productEntity, ProductModel.class);
 
             } catch (IOException e) {
                 e.printStackTrace();

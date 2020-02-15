@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -65,5 +66,14 @@ public class UserController {
         userService.activateAccount(email, token);
         //todo 激活成功的话重定向到登陆页面
         return "账户激活成功";
+    }
+
+
+    @PostMapping("modify-info")
+    public ResponseData modifyUserInfo(@RequestParam("raw-password") String rawPassword,
+                                       @RequestParam("new-password") String newPassword,
+                                       @RequestParam("avatar") MultipartFile avatar,
+                                       @RequestParam("qr-code") MultipartFile qrCode) {
+        return null;
     }
 }

@@ -29,7 +29,7 @@ public class FileHelper {
     }
 
     private String addUrlPrefix(String rawUrl) {
-        return urlPrefix + rawUrl;
+        return rawUrl != null ? urlPrefix + rawUrl : null;
     }
 
     public ProductModel addUrlPrefix(ProductModel productModel) {
