@@ -15,8 +15,8 @@ spring:
       initialize-schema: always
   mail:
     host: smtp.163.com
-    username: gyue15@163.com
-    password: gaoyuenju0917
+    username: {邮箱名称}
+    password: {邮箱授权码}
     default-encoding: UTF-8
     port: 465
     properties:
@@ -58,8 +58,8 @@ file-service:
 local-url: Http://localhost:8080
 active-account-url: ${local-url}/api/user/activate-account
 
-key-path:
-  public: /Users/gyue/fantasy-box/key/public
-  private: /Users/gyue/fantasy-box/key/private
+
+public-key: /Users/gyue/fantasy-box/key/public
+private-key: /Users/gyue/fantasy-box/key/private
 
 hot-num: 9

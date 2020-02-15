@@ -1,11 +1,10 @@
 package cn.edu.nju.fantasybox.service.impl;
 
 
-import cn.edu.nju.fantasybox.configuration.FilePathConfig;
+import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.entity.ProductEntity;
 import cn.edu.nju.fantasybox.entity.TagEntity;
 import cn.edu.nju.fantasybox.entity.UserEntity;
-import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.mapper.ProductMapper;
 import cn.edu.nju.fantasybox.mapper.TagMapper;
 import cn.edu.nju.fantasybox.mapper.UserMapper;
@@ -13,8 +12,10 @@ import cn.edu.nju.fantasybox.model.ProductListModel;
 import cn.edu.nju.fantasybox.model.ProductModel;
 import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.service.ProductService;
+import cn.edu.nju.fantasybox.util.FileHelper;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,18 +38,21 @@ public class ProductServiceImpl implements ProductService {
 
     private final UserMapper userMapper;
 
+    private final FileHelper fileHelper;
+
     private static final String HOT = "热门";
 
-    @Autowired
-    private FilePathConfig filePathConfig;
+    @Value("${file-service.local}")
+    private String localPath;
 
     @Autowired
     public ProductServiceImpl(ProductMapper productMapper, TagMapper tagMapper, DozerBeanMapper dozerBeanMapper,
-                              UserMapper userMapper) {
+                              UserMapper userMapper, FileHelper fileHelper) {
         this.productMapper = productMapper;
         this.tagMapper = tagMapper;
         this.dozerBeanMapper = dozerBeanMapper;
         this.userMapper = userMapper;
+        this.fileHelper = fileHelper;
     }
 
     @Override
@@ -58,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductEntity> hotEntities = productMapper.findHotProduct(hotNum);
         List<ProductModel> hotModels = new ArrayList<>();
         hotEntities.forEach(productEntity -> hotModels.add(dozerBeanMapper.map(productEntity, ProductModel.class)));
+        hotModels.forEach(fileHelper::addUrlPrefix);
         productList.add(new ProductListModel(HOT, hotModels));
 
         // 找到所有标签
@@ -67,7 +72,9 @@ public class ProductServiceImpl implements ProductService {
         Map<String, List<ProductModel>> modelMap = new HashMap<>(tags.size());
         entities.forEach(productEntity -> {
             List<ProductModel> modelList = modelMap.getOrDefault(productEntity.getSelectTag(), new ArrayList<>());
-            modelList.add(dozerBeanMapper.map(productEntity, ProductModel.class));
+            ProductModel model = dozerBeanMapper.map(productEntity, ProductModel.class);
+            fileHelper.addUrlPrefix(model);
+            modelList.add(model);
             modelMap.put(productEntity.getSelectTag(), modelList);
         });
         tags.forEach(tag -> productList.add(new ProductListModel(tag, modelMap.get(tag))));
@@ -81,7 +88,9 @@ public class ProductServiceImpl implements ProductService {
         if (entity == null) {
             return null;
         }
-        return dozerBeanMapper.map(entity, ProductModel.class);
+        ProductModel model = dozerBeanMapper.map(entity, ProductModel.class);
+        fileHelper.addUrlPrefix(model);
+        return model;
     }
 
     @Override
@@ -90,16 +99,16 @@ public class ProductServiceImpl implements ProductService {
         if (productEntities == null) {
             return null;
         }
-        return productEntities.stream().map(productEntity -> dozerBeanMapper.map(productEntity, ProductModel.class)).collect(Collectors.toList());
+        return productEntities.stream().map(productEntity -> fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class))).collect(Collectors.toList());
     }
 
     @Override
     public ProductModel postProduct(MultipartFile file, String description, String title, List<String> tags,
                                     long userId) {
         // 文件保存路径
-        String filePath = filePathConfig.getLocalPath() + System.currentTimeMillis() + file.getOriginalFilename();
+        String filePath = this.localPath + System.currentTimeMillis() + file.getOriginalFilename();
         // 文件url
-        String fileUrl = filePathConfig.getUrlPrefix() + System.currentTimeMillis() + file.getOriginalFilename();
+        String fileUrl = System.currentTimeMillis() + file.getOriginalFilename();
         if (!file.isEmpty()) {
             try {
                 File dest = new File(filePath);
@@ -145,6 +154,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductModel> search(List<String> keywords) {
         List<ProductEntity> productEntityList = productMapper.search(keywords);
-        return productEntityList.stream().map(productEntity -> dozerBeanMapper.map(productEntity, ProductModel.class)).collect(Collectors.toList());
+        return productEntityList.stream().map(productEntity -> fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class))).collect(Collectors.toList());
     }
 }

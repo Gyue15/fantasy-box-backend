@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 02/12/2020 17:35:03 PM
+ Date: 02/15/2020 16:54:23 PM
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,13 @@ CREATE TABLE `SPRING_SESSION` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
+--  Records of `SPRING_SESSION`
+-- ----------------------------
+BEGIN;
+INSERT INTO `SPRING_SESSION` VALUES ('c145c095-f724-48b2-b6fa-88bc2e4fc046', '4e8e59c7-f650-4b40-8699-066da8671897', '1581756659436', '1581756659437', '1800', '1581758459437', null);
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `SPRING_SESSION_ATTRIBUTES`
 -- ----------------------------
 DROP TABLE IF EXISTS `SPRING_SESSION_ATTRIBUTES`;
@@ -46,6 +53,13 @@ CREATE TABLE `SPRING_SESSION_ATTRIBUTES` (
   PRIMARY KEY (`SESSION_PRIMARY_ID`,`ATTRIBUTE_NAME`),
   CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK` FOREIGN KEY (`SESSION_PRIMARY_ID`) REFERENCES `SPRING_SESSION` (`PRIMARY_ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+--  Records of `SPRING_SESSION_ATTRIBUTES`
+-- ----------------------------
+BEGIN;
+INSERT INTO `SPRING_SESSION_ATTRIBUTES` VALUES ('c145c095-f724-48b2-b6fa-88bc2e4fc046', 'isLogin', 0xaced0005737200116a6176612e6c616e672e426f6f6c65616ecd207280d59cfaee0200015a000576616c7565787001), ('c145c095-f724-48b2-b6fa-88bc2e4fc046', 'userId', 0xaced00057372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b02000078700000000000000014);
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `pay`
@@ -120,14 +134,18 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `qr_code_url` varchar(255) DEFAULT NULL,
   `avatar_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `token` varchar(255) DEFAULT NULL,
+  `activated` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`) USING BTREE,
+  UNIQUE KEY `email` (`email`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', 'test00', '123456', 'test@123.com', 'qru1', 'au1'), ('2', 'test01', '123456', 'test@456.com', 'qru2', 'au2');
+INSERT INTO `user` VALUES ('1', 'test00', '123456', 'test@123.com', 'qru1', 'au1', null, null), ('2', 'test01', '123456', 'test@456.com', 'qru2', 'au2', null, null), ('20', 'wxy', 'dW2rKu+At4+jVNmTKxmhQGhfqlco1LPkM8nWL8YZqlr7SijSR3yeZNVeOW99Ml4F0X6YVRDSNItHmsvxTslh1D0yJwt6ZNFsUV6eonEqNCAK/nlZ/V/bbyLyBt11Xep0uGjmt3Lj/uoKo13KUFPeQMhXID6Qg5JVDorfqHRK1KU=', 'shea_wong@163.com', null, null, 'eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjAsInN0YSI6MTU4MTc1NjQ4NTAzNywiZXhwIjoxNTgxODQyODg1MDM3fQ.zvxijJ8oefAvnlTfKO_og3O-nuidOK-6bgFBfU5gBlQ', b'1');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
