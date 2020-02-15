@@ -9,13 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class FilePathConfig implements WebMvcConfigurer {
 
-    @Getter
     @Value("${file-service.local}")
     private String localPath;
-
-    @Getter
-    @Value("${file-service.url-prefix}")
-    private String urlPrefix;
 
     @Value("${file-service.url-pattern}")
     private String urlPattern;

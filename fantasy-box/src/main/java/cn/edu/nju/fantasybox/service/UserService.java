@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserEntity> getAllUsers();
+    List<UserModel> getAllUsers();
 
-    UserEntity getUser(long id);
+    UserModel getUser(long id);
 
     void register(String username,String password,String email);
 

@@ -1,6 +1,7 @@
 package cn.edu.nju.fantasybox.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,12 +26,19 @@ public class RSAEncrypt {
     @Value("${public-key}")
     private String publicKeyPath;
 
+    private FileHelper fileHelper;
+
+    @Autowired
+    public RSAEncrypt(FileHelper fileHelper) {
+        this.fileHelper = fileHelper;
+    }
+
     /**
      * 生成密钥对
      */
     private void genKeyPair() {
-        String publicKeyString = FileUtil.readFirstLine(publicKeyPath);
-        String privateKeyString = FileUtil.readFirstLine(privateKeyPath);
+        String publicKeyString = fileHelper.readFirstLine(publicKeyPath);
+        String privateKeyString = fileHelper.readFirstLine(privateKeyPath);
         // 将公钥和私钥保存到Map
         keyMap.put(0, publicKeyString);  //0表示公钥
         keyMap.put(1, privateKeyString);  //1表示私钥

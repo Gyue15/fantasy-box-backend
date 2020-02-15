@@ -1,15 +1,12 @@
 package cn.edu.nju.fantasybox.service.impl;
 
-import cn.edu.nju.fantasybox.entity.UserEntity;
 import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
+import cn.edu.nju.fantasybox.entity.UserEntity;
 import cn.edu.nju.fantasybox.mapper.UserMapper;
 import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.model.UserModel;
 import cn.edu.nju.fantasybox.service.UserService;
-import cn.edu.nju.fantasybox.util.FreemarkerHelper;
-import cn.edu.nju.fantasybox.util.MailHelper;
-import cn.edu.nju.fantasybox.util.RSAEncrypt;
-import cn.edu.nju.fantasybox.util.TokenHelper;
+import cn.edu.nju.fantasybox.util.*;
 import com.nimbusds.jose.JOSEException;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,30 +34,32 @@ public class UserServiceImpl implements UserService {
 
     private final RSAEncrypt rsaEncrypt;
 
+    private final FileHelper fileHelper;
+
     @Value("${active-account-url}")
     private String activeAccountUrl;
 
     @Autowired
     public UserServiceImpl(UserMapper userMapper, FreemarkerHelper freemarkerHelper, MailHelper mailHelper,
-                           TokenHelper tokenHelper, DozerBeanMapper dozerBeanMapper, RSAEncrypt rsaEncrypt) {
-
+                           TokenHelper tokenHelper, DozerBeanMapper dozerBeanMapper, RSAEncrypt rsaEncrypt,
+                           FileHelper fileHelper) {
         this.userMapper = userMapper;
         this.freemarkerHelper = freemarkerHelper;
         this.mailHelper = mailHelper;
         this.tokenHelper = tokenHelper;
         this.dozerBeanMapper = dozerBeanMapper;
         this.rsaEncrypt = rsaEncrypt;
+        this.fileHelper = fileHelper;
     }
 
     @Override
-    public List<UserEntity> getAllUsers() {
-        return userMapper.selectAll();
+    public List<UserModel> getAllUsers() {
+        return userMapper.selectAll().stream().map(userEntity -> fileHelper.addUrlPrefix(dozerBeanMapper.map(userEntity, UserModel.class))).collect(Collectors.toList());
     }
 
     @Override
-    public UserEntity getUser(long id) {
-        System.out.println(rsaEncrypt.encrypt("123"));
-        return userMapper.select(id);
+    public UserModel getUser(long id) {
+        return fileHelper.addUrlPrefix(dozerBeanMapper.map(userMapper.select(id), UserModel.class));
     }
 
     @Override
@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel login(String username, String password) {
-        //todo 持久化公钥和私钥
         UserEntity userEntity = userMapper.findByUserName(username);
         if (userEntity == null || !rsaEncrypt.decrypt(userEntity.getPassword()).equals(password)) {
             throw new BusinessException(ResultEnums.LOGIN_ERROR);
@@ -95,7 +94,7 @@ public class UserServiceImpl implements UserService {
         if (!userEntity.getActivated()) {
             throw new BusinessException(ResultEnums.NOT_ACTIVATED);
         }
-        return dozerBeanMapper.map(userEntity, UserModel.class);
+        return fileHelper.addUrlPrefix(dozerBeanMapper.map(userEntity, UserModel.class));
     }
 
     @Override
