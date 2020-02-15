@@ -1,9 +1,12 @@
 package cn.edu.nju.fantasybox.util;
 
+import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.model.ProductModel;
+import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.model.UserModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +18,9 @@ public class FileHelper {
 
     @Value("${file-service.url-prefix}")
     private String urlPrefix;
+
+    @Value("${file-service.local}")
+    private String localPath;
 
     public String readFirstLine(String filePath) {
         File file = new File(filePath);
@@ -43,5 +49,26 @@ public class FileHelper {
         userModel.setAvatarUrl(addUrlPrefix(userModel.getAvatarUrl()));
         userModel.setQrCodeUrl(addUrlPrefix(userModel.getQrCodeUrl()));
         return userModel;
+    }
+
+    public String saveFile(MultipartFile file) {
+        // 文件保存路径
+        String filePath = this.localPath + System.currentTimeMillis() + file.getOriginalFilename();
+        // 文件url
+        String fileUrl = System.currentTimeMillis() + file.getOriginalFilename();
+        if (file.isEmpty()) {
+            throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
+        }
+        File dest = new File(filePath);
+        // 检测是否存在目录
+        if (!dest.getParentFile().exists() && !dest.getParentFile().mkdirs()) {
+            throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
+        }
+        try {
+            file.transferTo(dest);
+        } catch (IOException e) {
+            throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
+        }
+        return fileUrl;
     }
 }

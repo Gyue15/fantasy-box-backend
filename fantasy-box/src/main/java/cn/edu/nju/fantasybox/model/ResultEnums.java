@@ -21,6 +21,7 @@ public enum ResultEnums  {
     TOKEN_EXPIRE("425","token过期，请重新登录"),
     TOKEN_WRONG("426","token错误"),
     NOT_ACTIVATED("427","账户尚未激活"),
+    RAW_PASSWORD_ERROR("428", "用户原密码错误"),
     ERROR("500", "服务器出错"),
     FILE_UPLOAD_ERROR("506","文件上传出错"),
 

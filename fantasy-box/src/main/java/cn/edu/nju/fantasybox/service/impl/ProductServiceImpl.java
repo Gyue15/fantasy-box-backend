@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductListModel> getAllProductList(int hotNum) {
         List<ProductListModel> productList = new ArrayList<>();
-//      添加热门产品
+        // 添加热门产品
         List<ProductEntity> hotEntities = productMapper.findHotProduct(hotNum);
         List<ProductModel> hotModels = new ArrayList<>();
         hotEntities.forEach(productEntity -> hotModels.add(dozerBeanMapper.map(productEntity, ProductModel.class)));
@@ -141,7 +141,7 @@ public class ProductServiceImpl implements ProductService {
 
                 // 获取更新后的product
                 productEntity = productMapper.select(productId);
-                return dozerBeanMapper.map(productEntity, ProductModel.class);
+                return fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class));
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package cn.edu.nju.fantasybox.controller;
 
+import cn.edu.nju.fantasybox.configuration.annotation.Authentication;
 import cn.edu.nju.fantasybox.model.ResponseData;
 import cn.edu.nju.fantasybox.util.ResponseDataUtil;
 import cn.edu.nju.fantasybox.model.ResultEnums;
@@ -8,6 +9,7 @@ import cn.edu.nju.fantasybox.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,6 +50,7 @@ public class UserController {
     public ResponseData login(String username, String password, HttpServletRequest request) {
         UserModel userModel = userService.login(username, password);
         HttpSession httpSession = request.getSession();
+        System.out.println("login: " + httpSession.getId());
         httpSession.setAttribute("isLogin", true);
         httpSession.setAttribute("userId", userModel.getId());
         return ResponseDataUtil.buildSuccess(userModel);
@@ -69,11 +72,29 @@ public class UserController {
     }
 
 
-    @PostMapping("modify-info")
-    public ResponseData modifyUserInfo(@RequestParam("raw-password") String rawPassword,
-                                       @RequestParam("new-password") String newPassword,
-                                       @RequestParam("avatar") MultipartFile avatar,
-                                       @RequestParam("qr-code") MultipartFile qrCode) {
-        return null;
+    @PostMapping("modify-password")
+    @Authentication
+    public ResponseData modifyPassword(@RequestParam("raw-password") String rawPassword,
+                                       @RequestParam("new-password") String newPassword, HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        long userId = (Long) httpSession.getAttribute("userId");
+        return ResponseDataUtil.buildSuccess(userService.modifyPassword(userId, rawPassword, newPassword));
+    }
+
+    @PostMapping("modify-avatar")
+    @Authentication
+    public ResponseData modifyAvatar(@RequestParam("avatar") MultipartFile avatar, HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        System.out.println("modify avatar: " + httpSession.getId());
+        long userId = (Long) httpSession.getAttribute("userId");
+        return ResponseDataUtil.buildSuccess(userService.modifyAvatar(userId, avatar));
+    }
+
+    @PostMapping("modify-qr")
+    @Authentication
+    public ResponseData modifyQrCode(@RequestParam("qr-code") MultipartFile qrCode, HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        long userId = (Long) httpSession.getAttribute("userId");
+        return ResponseDataUtil.buildSuccess(userService.modifyQrCode(userId, qrCode));
     }
 }

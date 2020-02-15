@@ -12,7 +12,10 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -116,5 +119,30 @@ public class UserServiceImpl implements UserService {
         userEntity.setActivated(true);
         userEntity.setId(userId);
         userMapper.saveUser(userEntity);
+    }
+
+    @Override
+    public UserModel modifyAvatar(long userId, MultipartFile avatar) {
+        String fileUrl = fileHelper.saveFile(avatar);
+        // 更新数据库
+        userMapper.updateAvatar(userId, fileUrl);
+        return fileHelper.addUrlPrefix(dozerBeanMapper.map(userMapper.select(userId), UserModel.class));
+    }
+
+    @Override
+    public UserModel modifyQrCode(long userId, MultipartFile qrCode) {
+        String fileUrl = fileHelper.saveFile(qrCode);
+        userMapper.updateQrCode(userId, fileUrl);
+        return fileHelper.addUrlPrefix(dozerBeanMapper.map(userMapper.select(userId), UserModel.class));
+    }
+
+    @Override
+    public UserModel modifyPassword(long userId, String rawPassword, String newPassword) {
+        UserEntity userEntity = userMapper.select(userId);
+        if (userEntity == null || !rsaEncrypt.decrypt(userEntity.getPassword()).equals(rawPassword)) {
+            throw new BusinessException(ResultEnums.RAW_PASSWORD_ERROR);
+        }
+        userMapper.updatePassword(userId, rsaEncrypt.encrypt(newPassword));
+        return fileHelper.addUrlPrefix(dozerBeanMapper.map(userMapper.select(userId), UserModel.class));
     }
 }

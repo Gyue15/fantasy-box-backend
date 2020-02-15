@@ -31,6 +31,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             return true;
         }
         HttpSession httpSession = httpServletRequest.getSession();
+        System.out.println("session: " + httpSession.getId());
         Boolean isLogin = (Boolean) httpSession.getAttribute("isLogin");
         if (isLogin == null || !isLogin) {
             throw new BusinessException(ResultEnums.UNAUTHORIZED);
