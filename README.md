@@ -76,4 +76,13 @@
 
    其中，{xxx}替换为本机配置
 
+3. 将application.yml修改为：
+
+  ```yml
+  #选择配置文件
+  spring:
+    profiles:
+      active: dev-g
+  ```
+  
    
