@@ -19,4 +19,6 @@ public interface ProductMapper {
     ProductEntity select(long id);
 
     int insertProduct(ProductEntity productEntity);
+
+    List<ProductEntity> search(List<String> keywords);
 }

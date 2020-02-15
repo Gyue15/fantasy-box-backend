@@ -1,4 +1,4 @@
-package cn.edu.nju.fantasybox.interceptor;
+package cn.edu.nju.fantasybox.configuration.interceptor;
 
 import cn.edu.nju.fantasybox.model.ResponseData;
 import cn.edu.nju.fantasybox.util.ResponseDataUtil;

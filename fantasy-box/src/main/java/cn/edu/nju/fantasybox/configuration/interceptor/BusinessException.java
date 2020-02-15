@@ -1,4 +1,4 @@
-package cn.edu.nju.fantasybox.interceptor;
+package cn.edu.nju.fantasybox.configuration.interceptor;
 
 import cn.edu.nju.fantasybox.model.ResultEnums;
 import lombok.Data;

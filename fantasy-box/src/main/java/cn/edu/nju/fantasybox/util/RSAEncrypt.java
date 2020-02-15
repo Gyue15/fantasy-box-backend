@@ -43,8 +43,8 @@ public class RSAEncrypt {
             // 将公钥和私钥保存到Map
             keyMap.put(0, publicKeyString);  //0表示公钥
             keyMap.put(1, privateKeyString);  //1表示私钥
-            System.out.println("public key: " + publicKeyString);
-            System.out.println("private key: " + privateKeyString);
+            System.out.println("public key: " + publicKeyString + " end");
+            System.out.println("private key: " + privateKeyString + " end");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

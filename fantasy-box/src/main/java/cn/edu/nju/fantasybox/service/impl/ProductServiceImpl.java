@@ -5,7 +5,7 @@ import cn.edu.nju.fantasybox.configuration.FilePathConfig;
 import cn.edu.nju.fantasybox.entity.ProductEntity;
 import cn.edu.nju.fantasybox.entity.TagEntity;
 import cn.edu.nju.fantasybox.entity.UserEntity;
-import cn.edu.nju.fantasybox.interceptor.BusinessException;
+import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.mapper.ProductMapper;
 import cn.edu.nju.fantasybox.mapper.TagMapper;
 import cn.edu.nju.fantasybox.mapper.UserMapper;
@@ -140,5 +140,11 @@ public class ProductServiceImpl implements ProductService {
         } else {
             throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
         }
+    }
+
+    @Override
+    public List<ProductModel> search(List<String> keywords) {
+        List<ProductEntity> productEntityList = productMapper.search(keywords);
+        return productEntityList.stream().map(productEntity -> dozerBeanMapper.map(productEntity, ProductModel.class)).collect(Collectors.toList());
     }
 }

@@ -1,6 +1,6 @@
 package cn.edu.nju.fantasybox.util;
 
-import cn.edu.nju.fantasybox.interceptor.BusinessException;
+import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.model.ResultEnums;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;

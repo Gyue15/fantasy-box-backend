@@ -92,6 +92,21 @@
             p.modify_time DESC
     </select>
 
+    <select id="search" resultMap="ProductResultMap">
+        SELECT
+            p.*,
+            t.`tag_name` AS select_tag
+        FROM
+            product p
+            LEFT JOIN tag t ON t.`product_id` = p.`id`
+        WHERE
+        <foreach item="item" collection="list" separator="OR">
+            upper(concat(p.product_name, p.description, IFNULL(t.tag_name, ''))) LIKE upper(concat('%', #{item, jdbcType=VARCHAR}, '%'))
+        </foreach>
+        ORDER BY
+            p.modify_time DESC
+    </select>
+
     <insert id="insertProduct" parameterType="cn.edu.nju.fantasybox.entity.ProductEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO product ( user_id, product_name, username, user_avatar, file_url, description )
         VALUES

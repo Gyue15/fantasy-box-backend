@@ -1,8 +1,6 @@
 package cn.edu.nju.fantasybox.controller;
 
-import cn.edu.nju.fantasybox.annotation.Authentication;
-import cn.edu.nju.fantasybox.annotation.UserLoginToken;
-import cn.edu.nju.fantasybox.interceptor.BusinessException;
+import cn.edu.nju.fantasybox.configuration.annotation.Authentication;
 import cn.edu.nju.fantasybox.model.*;
 import cn.edu.nju.fantasybox.service.ProductService;
 import cn.edu.nju.fantasybox.util.ResponseDataUtil;
@@ -13,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -59,6 +58,12 @@ public class ProductController {
         HttpSession httpSession = request.getSession();
         long userId = (Long) httpSession.getAttribute("userId");
         return ResponseDataUtil.buildSuccess(productService.getMyProduct(userId));
+    }
+
+    @GetMapping("search")
+    public ResponseData search(@RequestParam("keywords") String keywords) {
+        String[] keywordList = keywords.trim().split("\\s+");
+        return ResponseDataUtil.buildSuccess(productService.search(Arrays.asList(keywordList)));
     }
 
 }

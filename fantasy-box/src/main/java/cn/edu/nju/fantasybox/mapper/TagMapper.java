@@ -11,4 +11,6 @@ public interface TagMapper {
     List<String> selectAllByCount();
 
     int insertAll(List<TagEntity> tagEntities);
+
+    List<String> search(List<String> keywords);
 }

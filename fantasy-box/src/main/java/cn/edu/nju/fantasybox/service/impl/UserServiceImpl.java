@@ -1,7 +1,7 @@
 package cn.edu.nju.fantasybox.service.impl;
 
 import cn.edu.nju.fantasybox.entity.UserEntity;
-import cn.edu.nju.fantasybox.interceptor.BusinessException;
+import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.mapper.UserMapper;
 import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.model.UserModel;
@@ -20,7 +20,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService {

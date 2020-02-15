@@ -51,11 +51,15 @@ logging:
     cn.edu.nju.fantasybox.mapper: debug
 
 file-service:
-  local: file:/Users/gyue/fantasy-box-data/
+  local: file:/Users/gyue/fantasy-box/data/
   url-pattern: /file/**
   url-prefix: http://localhost:8080/file/
 
 local-url: Http://localhost:8080
 active-account-url: ${local-url}/api/user/activate-account
+
+key-path:
+  public: /Users/gyue/fantasy-box/key/public
+  private: /Users/gyue/fantasy-box/key/private
 
 hot-num: 9

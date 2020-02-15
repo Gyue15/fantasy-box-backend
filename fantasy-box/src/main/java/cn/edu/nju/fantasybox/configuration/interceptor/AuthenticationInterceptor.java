@@ -1,10 +1,9 @@
-package cn.edu.nju.fantasybox.interceptor;
+package cn.edu.nju.fantasybox.configuration.interceptor;
 
-import cn.edu.nju.fantasybox.annotation.Authentication;
+import cn.edu.nju.fantasybox.configuration.annotation.Authentication;
 import cn.edu.nju.fantasybox.model.ResultEnums;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,17 +36,5 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             throw new BusinessException(ResultEnums.UNAUTHORIZED);
         }
         return true;
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o,
-                           ModelAndView modelAndView) {
-
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                                Object o, Exception e) {
-
     }
 }

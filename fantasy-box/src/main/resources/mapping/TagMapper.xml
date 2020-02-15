@@ -18,6 +18,17 @@
         ORDER BY
             count( * ) DESC
     </select>
+
+    <select id="search" resultType="string">
+        SELECT DISTINCT
+            tag.tag_name
+        FROM
+            tag
+        WHERE
+        <foreach item="item" collection="list" separator="OR">
+            upper( tag.tag_name ) LIKE upper( concat( '%', #{item, jdbcType=VARCHAR}, '%' ) )
+        </foreach>
+    </select>
     
     <insert id="insertAll" parameterType="cn.edu.nju.fantasybox.entity.TagEntity" useGeneratedKeys="true" keyProperty="id">
         insert ignore into tag (product_id,tag_name) values
