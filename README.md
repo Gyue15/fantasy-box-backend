@@ -60,7 +60,7 @@
        cn.edu.nju.fantasybox.mapper: debug
    
    file-service:
-     local: file:{本地存放文件的路径}
+     local: {本地存放文件的路径}
      url-pattern: /file/**
      url-prefix: {访问文件资源的url前缀，如http://localhost:8080/file/}
    

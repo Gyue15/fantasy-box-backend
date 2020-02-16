@@ -54,4 +54,27 @@
         WHERE id=#{id}
     </update>
 
+    <update id="updateAvatar">
+        UPDATE `user`,
+        `product`
+        SET `user`.avatar_url = #{avatarUrl},
+        `product`.user_avatar = #{avatarUrl}
+        WHERE
+            `user`.`id` = #{userId}
+            AND `product`.user_id = #{userId}
+    </update>
+
+    <update id="updateQrCode">
+        UPDATE `user`
+        SET `user`.qr_code_url = #{qrCodeUrl}
+        WHERE
+            `user`.`id` = #{userId}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE `user`
+        SET `user`.`password` = #{password}
+        WHERE
+            `user`.`id` = #{userId}
+    </update>
 </mapper>

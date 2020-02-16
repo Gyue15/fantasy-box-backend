@@ -1,7 +1,7 @@
 package cn.edu.nju.fantasybox.mapper;
 
 import cn.edu.nju.fantasybox.entity.UserEntity;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,13 +13,17 @@ public interface UserMapper {
 
     List<UserEntity> selectAll();
 
-//    int insertEmail(@Param("email")String email, @Param("activeCode") String activateCode);
-
     UserEntity findByEmail(String email);
+
     UserEntity findByUserName(String username);
 
+    void insertUser(UserEntity userEntity);
 
-    int insertUser(UserEntity userEntity);
+    void saveUser(UserEntity userEntity);
 
-    int saveUser(UserEntity userEntity);
+    void updateAvatar(@Param("userId") long userId, @Param("avatarUrl") String avatarUrl);
+
+    void updateQrCode(@Param("userId") long userId, @Param("qrCodeUrl") String qrCodeUrl);
+
+    void updatePassword(@Param("userId") long userId, @Param("password") String password);
 }
