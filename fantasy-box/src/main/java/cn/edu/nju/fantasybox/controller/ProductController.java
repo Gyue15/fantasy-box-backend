@@ -4,6 +4,8 @@ import cn.edu.nju.fantasybox.configuration.annotation.Authentication;
 import cn.edu.nju.fantasybox.model.*;
 import cn.edu.nju.fantasybox.service.ProductService;
 import cn.edu.nju.fantasybox.util.ResponseDataUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
+
+    private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     private final ProductService productService;
 
@@ -48,6 +52,7 @@ public class ProductController {
                                     @RequestParam("title") String title, @RequestParam("tags") List<String> tags,
                                     HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
+        logger.info(httpSession.getId());
         long userId = (Long) httpSession.getAttribute("userId");
         return ResponseDataUtil.buildSuccess(productService.postProduct(file, description, title, tags, userId));
     }
