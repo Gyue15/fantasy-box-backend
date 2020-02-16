@@ -17,7 +17,9 @@ public class TagConverter extends DozerConverter<TagEntity, String> {
 
     @Override
     public TagEntity convertFrom(String s, TagEntity tagEntity) {
-        tagEntity = new TagEntity(-1, s, -1);
+        tagEntity.setId(-1);
+        tagEntity.setTagName(s);
+        tagEntity.setProductId(-1);
         return tagEntity;
     }
 }

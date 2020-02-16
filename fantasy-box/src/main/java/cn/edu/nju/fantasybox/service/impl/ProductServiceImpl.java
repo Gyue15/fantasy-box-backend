@@ -14,6 +14,8 @@ import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.service.ProductService;
 import cn.edu.nju.fantasybox.util.FileHelper;
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Value("${file-service.local}")
     private String localPath;
+
+    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
     public ProductServiceImpl(ProductMapper productMapper, TagMapper tagMapper, DozerBeanMapper dozerBeanMapper,
@@ -144,7 +148,7 @@ public class ProductServiceImpl implements ProductService {
                 return fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class));
 
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("context",e);
                 throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
             }
         } else {

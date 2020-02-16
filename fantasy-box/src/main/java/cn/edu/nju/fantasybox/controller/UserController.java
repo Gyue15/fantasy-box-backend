@@ -53,6 +53,7 @@ public class UserController {
         System.out.println("login: " + httpSession.getId());
         httpSession.setAttribute("isLogin", true);
         httpSession.setAttribute("userId", userModel.getId());
+        logger.info(httpSession.getId());
         return ResponseDataUtil.buildSuccess(userModel);
     }
 

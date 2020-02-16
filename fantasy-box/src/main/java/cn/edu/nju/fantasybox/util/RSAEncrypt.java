@@ -1,6 +1,8 @@
 package cn.edu.nju.fantasybox.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,9 @@ public class RSAEncrypt {
     private String publicKeyPath;
 
     private FileHelper fileHelper;
+
+    private final Logger logger = LoggerFactory.getLogger(RSAEncrypt.class);
+
 
     @Autowired
     public RSAEncrypt(FileHelper fileHelper) {
@@ -68,7 +73,7 @@ public class RSAEncrypt {
             outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes(StandardCharsets.UTF_8)));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("context",e);
         }
 
         return outStr;
@@ -99,7 +104,7 @@ public class RSAEncrypt {
             cipher.init(Cipher.DECRYPT_MODE, priKey);
             outStr = new String(cipher.doFinal(inputByte));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("context",e);
         }
 
         return outStr;
