@@ -14,8 +14,8 @@ spring:
       initialize-schema: always
   mail:
     host: smtp.163.com
-    username: {邮箱名称}
-    password: {邮箱授权码}
+    username:
+    password: 
     default-encoding: UTF-8
     port: 465
     properties:
@@ -58,8 +58,7 @@ file-service:
 local-url: Http://localhost:8080
 active-account-url: ${local-url}/api/user/activate-account
 
-key-path:
-  public: /Users/shea/project/fantasy-key/public
-  private: /Users/shea/project/fantasy-key/private
+public-key: /Users/shea/project/fantasy-key/public
+private-key: /Users/shea/project/fantasy-key/private
 
 hot-num: 9

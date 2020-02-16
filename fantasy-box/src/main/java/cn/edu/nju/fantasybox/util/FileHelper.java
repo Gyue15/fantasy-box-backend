@@ -4,14 +4,13 @@ import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.model.ProductModel;
 import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.model.UserModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 @Component
 public class FileHelper {
@@ -22,14 +21,16 @@ public class FileHelper {
     @Value("${file-service.local}")
     private String localPath;
 
+    private final Logger logger = LoggerFactory.getLogger(FileHelper.class);
+
+
     public String readFirstLine(String filePath) {
         File file = new File(filePath);
         String str = null;
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             str = bufferedReader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("context",e);
         }
         return str;
     }
