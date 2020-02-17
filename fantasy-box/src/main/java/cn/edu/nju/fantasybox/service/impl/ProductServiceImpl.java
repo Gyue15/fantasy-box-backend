@@ -61,6 +61,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductListModel> getAllProductList(int hotNum) {
+        logger.info(String.valueOf(hotNum));
         List<ProductListModel> productList = new ArrayList<>();
         // 添加热门产品
         List<ProductEntity> hotEntities = productMapper.findHotProduct(hotNum);
@@ -88,6 +89,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductModel getProduct(long id) {
+        logger.info(String.valueOf(id));
         ProductEntity entity = productMapper.select(id);
         if (entity == null) {
             return null;
