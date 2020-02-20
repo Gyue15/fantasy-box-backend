@@ -49,7 +49,7 @@ logging:
   level:
     cn.edu.nju.fantasybox.mapper: debug
 
-local-url: Http://localhost:${server.port}
+local-url: http://172.19.240.145:${server.port}
 active-account-url: ${local-url}/api/user/activate-account
 
 file-service:

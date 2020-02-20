@@ -25,7 +25,7 @@ public class ProductController {
     private final ProductService productService;
 
     @Value("${hot-num}")
-    private int DEFAULT_HOT_NUM;
+    private int defaultHotNum;
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -35,7 +35,7 @@ public class ProductController {
     @GetMapping("all-list")
     public ResponseData getAllProductList(@RequestParam(name = "hot-num", required = false) Integer hotNum) {
         if (hotNum == null) {
-            hotNum = DEFAULT_HOT_NUM;
+            hotNum = defaultHotNum;
         }
         return ResponseDataUtil.buildSuccess(productService.getAllProductList(hotNum));
     }
