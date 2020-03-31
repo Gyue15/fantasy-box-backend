@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 16/02/2020 23:31:44
+ Date: 31/03/2020 19:47:59
 */
 
 SET NAMES utf8mb4;
@@ -109,7 +109,7 @@ CREATE TABLE `tag` (
   UNIQUE KEY `tag_content` (`tag_name`,`product_id`),
   KEY `tag_product_id` (`product_id`),
   CONSTRAINT `tag_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tag
