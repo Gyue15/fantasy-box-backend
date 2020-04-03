@@ -1,0 +1,65 @@
+#gy本地开发环境的配置文件
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: root
+    password:
+    url: jdbc:mysql://localhost:3306/fantasy-box?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+  #    driver-class-name: com.mysql.jdbc.Driver
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+  mail:
+    host: smtp.163.com
+    username: gyue15@163.com
+    password: gaoyuenju0917
+    default-encoding: UTF-8
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            required: true
+            enable: true
+          socketFactory:
+            fallback: false
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+        debug: true
+  freemarker:
+    template-loader-path: classpath:/templates/
+    charset: UTF-8
+    cache: false
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    suffix: .ftl
+    content-type: text/html
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.example.entity
+
+#showSql
+logging:
+  level:
+    cn.edu.nju.fantasybox.mapper: debug
+
+file-service:
+  local: file:./fantasy-box/data/
+  url-pattern: /file/**
+  url-prefix: http://localhost:8080/file/
+
+local-url: Http://localhost:8080
+active-account-url: ${local-url}/api/user/activate-account
+
+
+public-key: ./fantasy-box/key/public
+private-key: ./fantasy-box/key/private
+
+hot-num: 9
