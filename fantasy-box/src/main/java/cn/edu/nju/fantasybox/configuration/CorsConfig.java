@@ -14,7 +14,7 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsConfig {
     private org.springframework.web.cors.CorsConfiguration buildConfig() {
         org.springframework.web.cors.CorsConfiguration corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:63558"); // 允许localhost的flutter应用端口跨域
+        corsConfiguration.addAllowedOrigin("http://localhost:55143"); // 允许localhost的flutter应用端口跨域
         corsConfiguration.addAllowedHeader("*"); // 允许所有的Header
         corsConfiguration.addAllowedMethod("*"); // 允许所有的方法
         return corsConfiguration;

@@ -2,6 +2,7 @@ package cn.edu.nju.fantasybox.configuration.interceptor;
 
 import cn.edu.nju.fantasybox.configuration.annotation.Authentication;
 import cn.edu.nju.fantasybox.model.ResultEnums;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -12,6 +13,10 @@ import java.lang.reflect.Method;
 
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
+    @Value("${cross-authentication}")
+    private boolean crossAuthentication;
+    @Value("${testUser}")
+    private String testUser;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -34,7 +39,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         System.out.println("session: " + httpSession.getId());
         Boolean isLogin = (Boolean) httpSession.getAttribute("isLogin");
         if (isLogin == null || !isLogin) {
-            throw new BusinessException(ResultEnums.UNAUTHORIZED);
+            if(crossAuthentication){ //供测试环境绕过权限验证
+                httpSession.setAttribute("isLogin", true);
+                httpSession.setAttribute("userId", testUser);
+            }else {
+                throw new BusinessException(ResultEnums.UNAUTHORIZED);
+            }
         }
         return true;
     }

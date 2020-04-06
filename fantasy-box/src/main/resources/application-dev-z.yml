@@ -51,9 +51,9 @@ logging:
     cn.edu.nju.fantasybox.mapper: debug
 
 file-service:
-  local: file:./fantasy-box/data/
+  local: ./fantasy-box/data/
   url-pattern: /file/**
-  url-prefix: http://localhost:8080/file/
+  url-prefix: ${local-url}/file/
 
 local-url: Http://localhost:8080
 active-account-url: ${local-url}/api/user/activate-account
@@ -63,3 +63,7 @@ public-key: ./fantasy-box/key/public
 private-key: ./fantasy-box/key/private
 
 hot-num: 9
+
+#仅开发环境下绕过权限验证用
+cross-authentication: true
+testUser: 0
