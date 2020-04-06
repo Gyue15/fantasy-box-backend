@@ -14,7 +14,8 @@ public interface ProductService {
 
     List<ProductModel> getMyProduct(long userId);
 
-    ProductModel postProduct(MultipartFile file,String description,String title,List<String> tags,long userId);
+    ProductModel postProduct(MultipartFile file, MultipartFile cover, String description, String title,
+                             List<String> tags, long userId);
 
     List<ProductModel> search(List<String> keywords);
 }

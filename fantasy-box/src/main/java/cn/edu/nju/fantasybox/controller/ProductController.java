@@ -48,13 +48,14 @@ public class ProductController {
     @PostMapping("post-product")
     @Authentication
     public ResponseData postProduct(@RequestParam("file") MultipartFile file,
+                                    @RequestParam("cover") MultipartFile cover,
                                     @RequestParam("description") String description,
                                     @RequestParam("title") String title, @RequestParam("tags") List<String> tags,
                                     HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
         logger.info(httpSession.getId());
         long userId = (Long) httpSession.getAttribute("userId");
-        return ResponseDataUtil.buildSuccess(productService.postProduct(file, description, title, tags, userId));
+        return ResponseDataUtil.buildSuccess(productService.postProduct(file, cover, description, title, tags, userId));
     }
 
     @GetMapping("get-my-product")
