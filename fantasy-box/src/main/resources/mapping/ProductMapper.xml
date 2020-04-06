@@ -39,7 +39,7 @@
     <select id="findProductByTagList" resultMap="ProductResultMap" parameterType="list">
         SELECT
             p.*,
-            t.`tag_name` AS select_tag
+            t.`tag_name` as select_tag
         FROM
             product p,
             tag t
@@ -109,10 +109,10 @@
     </select>
 
     <insert id="insertProduct" parameterType="cn.edu.nju.fantasybox.entity.ProductEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO product ( user_id, product_name, username, user_avatar, file_url, description )
+        INSERT INTO product ( user_id, product_name, username, user_avatar, file_url, description, cover_url )
         VALUES
-            (#{userId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},
-        #{userAvatar,jdbcType=VARCHAR},#{fileUrl,jdbcType=VARCHAR},#{description,jdbcType=BIGINT})
+            (#{userId,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+        #{userAvatar,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{description,jdbcType=BIGINT}, #{coverUrl,jdbcType=VARCHAR})
     </insert>
 
 </mapper>

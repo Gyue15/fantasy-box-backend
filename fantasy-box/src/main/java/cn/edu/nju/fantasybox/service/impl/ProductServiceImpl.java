@@ -83,7 +83,8 @@ public class ProductServiceImpl implements ProductService {
             modelMap.put(productEntity.getSelectTag(), modelList);
         });
         tags.forEach(tag -> productList.add(new ProductListModel(tag, modelMap.get(tag))));
-
+//        System.out.println(productList);
+        System.out.println(modelMap);
         return productList;
     }
 
@@ -109,22 +110,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductModel postProduct(MultipartFile file, String description, String title, List<String> tags,
-                                    long userId) {
-        // 文件保存路径
-        String filePath = this.localPath + System.currentTimeMillis() + file.getOriginalFilename();
+    public ProductModel postProduct(MultipartFile file, MultipartFile cover, String description, String title,
+                                    List<String> tags, long userId) {
         // 文件url
-        String fileUrl = System.currentTimeMillis() + file.getOriginalFilename();
-        if (!file.isEmpty()) {
+        String fileUrl = "file-" + System.currentTimeMillis() + file.getOriginalFilename();
+        String coverUrl = "cover-" + System.currentTimeMillis() + cover.getOriginalFilename();
+        // 文件保存路径
+        String filePath = this.localPath + fileUrl;
+        String coverPath = this.localPath + coverUrl;
+        if (!file.isEmpty() && !cover.isEmpty()) {
             try {
                 File dest = new File(filePath);
+                File coverDest = new File(coverPath);
 
                 // 检测是否存在目录
                 if (!dest.getParentFile().exists() && !dest.getParentFile().mkdirs()) {
                     throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
                 }
+                if (!coverDest.getParentFile().exists() && !coverDest.getParentFile().mkdirs()) {
+                    throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
+                }
 
                 file.transferTo(dest);
+                cover.transferTo(coverDest);
                 //将本次产品发布存到数据库
                 UserEntity userEntity = userMapper.select(userId);
                 ProductEntity productEntity = new ProductEntity();
@@ -134,6 +142,7 @@ public class ProductServiceImpl implements ProductService {
                 productEntity.setUserAvatar(userEntity.getAvatarUrl());
                 productEntity.setUserId(userId);
                 productEntity.setUsername(userEntity.getUsername());
+                productEntity.setCoverUrl(coverUrl);
                 productMapper.insertProduct(productEntity);
                 final long productId = productEntity.getId();
                 //存储标签
@@ -150,7 +159,7 @@ public class ProductServiceImpl implements ProductService {
                 return fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class));
 
             } catch (IOException e) {
-                logger.error("context",e);
+                logger.error("context", e);
                 throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
             }
         } else {

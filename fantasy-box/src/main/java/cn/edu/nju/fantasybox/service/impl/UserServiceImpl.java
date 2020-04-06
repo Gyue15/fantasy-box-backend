@@ -12,6 +12,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.ParseException;
@@ -64,6 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void register(String username, String password, String email) {
         if (userMapper.findByEmail(email) != null) {
             throw new BusinessException(ResultEnums.EMAIL_OCCUPIED);
