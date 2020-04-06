@@ -62,3 +62,7 @@ public-key: /Users/gyue/fantasy-box/key/public
 private-key: /Users/gyue/fantasy-box/key/private
 
 hot-num: 9
+
+#仅开发环境下绕过权限验证用
+cross-authentication: false
+testUser: 0
