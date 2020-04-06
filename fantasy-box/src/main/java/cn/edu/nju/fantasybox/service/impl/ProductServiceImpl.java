@@ -1,7 +1,6 @@
 package cn.edu.nju.fantasybox.service.impl;
 
 
-import cn.edu.nju.fantasybox.configuration.interceptor.BusinessException;
 import cn.edu.nju.fantasybox.entity.ProductEntity;
 import cn.edu.nju.fantasybox.entity.TagEntity;
 import cn.edu.nju.fantasybox.entity.UserEntity;
@@ -10,7 +9,6 @@ import cn.edu.nju.fantasybox.mapper.TagMapper;
 import cn.edu.nju.fantasybox.mapper.UserMapper;
 import cn.edu.nju.fantasybox.model.ProductListModel;
 import cn.edu.nju.fantasybox.model.ProductModel;
-import cn.edu.nju.fantasybox.model.ResultEnums;
 import cn.edu.nju.fantasybox.service.ProductService;
 import cn.edu.nju.fantasybox.util.FileHelper;
 import org.dozer.DozerBeanMapper;
@@ -21,8 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +78,6 @@ public class ProductServiceImpl implements ProductService {
             modelMap.put(productEntity.getSelectTag(), modelList);
         });
         tags.forEach(tag -> productList.add(new ProductListModel(tag, modelMap.get(tag))));
-//        System.out.println(productList);
         System.out.println(modelMap);
         return productList;
     }
@@ -110,59 +105,41 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductModel postProduct(MultipartFile file, MultipartFile cover, String description, String title,
                                     List<String> tags, long userId) {
-        // 文件url
-        String fileUrl = "file-" + System.currentTimeMillis() + file.getOriginalFilename();
-        String coverUrl = "cover-" + System.currentTimeMillis() + cover.getOriginalFilename();
-        // 文件保存路径
-        String filePath = this.localPath + fileUrl;
-        String coverPath = this.localPath + coverUrl;
-        if (!file.isEmpty() && !cover.isEmpty()) {
-            try {
-                File dest = new File(filePath);
-                File coverDest = new File(coverPath);
+        // 保存文件，获取文件url
+        String fileUrl = fileHelper.saveFile(file);
+        String coverUrl = fileHelper.saveFile(file);
+        return postProduct(fileUrl, coverUrl, description, title, tags, userId);
 
-                // 检测是否存在目录
-                if (!dest.getParentFile().exists() && !dest.getParentFile().mkdirs()) {
-                    throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
-                }
-                if (!coverDest.getParentFile().exists() && !coverDest.getParentFile().mkdirs()) {
-                    throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
-                }
+    }
 
-                file.transferTo(dest);
-                cover.transferTo(coverDest);
-                //将本次产品发布存到数据库
-                UserEntity userEntity = userMapper.select(userId);
-                ProductEntity productEntity = new ProductEntity();
-                productEntity.setFileUrl(fileUrl);
-                productEntity.setDescription(description);
-                productEntity.setProductName(title);
-                productEntity.setUserAvatar(userEntity.getAvatarUrl());
-                productEntity.setUserId(userId);
-                productEntity.setUsername(userEntity.getUsername());
-                productEntity.setCoverUrl(coverUrl);
-                productMapper.insertProduct(productEntity);
-                final long productId = productEntity.getId();
-                //存储标签
-                List<TagEntity> tagEntities = tags.stream().map(tag -> {
-                    TagEntity tagEntity = new TagEntity();
-                    tagEntity.setProductId(productId);
-                    tagEntity.setTagName(tag);
-                    return tagEntity;
-                }).collect(Collectors.toList());
-                tagMapper.insertAll(tagEntities);
+    @Override
+    public ProductModel postProduct(String fileUrl, String coverUrl, String description, String title,
+                                    List<String> tags, long userId) {
 
-                // 获取更新后的product
-                productEntity = productMapper.select(productId);
-                return fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class));
+        //将本次产品发布存到数据库
+        UserEntity userEntity = userMapper.select(userId);
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setFileUrl(fileUrl);
+        productEntity.setDescription(description);
+        productEntity.setProductName(title);
+        productEntity.setUserAvatar(userEntity.getAvatarUrl());
+        productEntity.setUserId(userId);
+        productEntity.setUsername(userEntity.getUsername());
+        productEntity.setCoverUrl(coverUrl);
+        productMapper.insertProduct(productEntity);
+        final long productId = productEntity.getId();
+        //存储标签
+        List<TagEntity> tagEntities = tags.stream().map(tag -> {
+            TagEntity tagEntity = new TagEntity();
+            tagEntity.setProductId(productId);
+            tagEntity.setTagName(tag);
+            return tagEntity;
+        }).collect(Collectors.toList());
+        tagMapper.insertAll(tagEntities);
 
-            } catch (IOException e) {
-                logger.error("context", e);
-                throw new BusinessException(ResultEnums.FILE_UPLOAD_ERROR);
-            }
-        } else {
-            throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
-        }
+        // 获取更新后的product
+        productEntity = productMapper.select(productId);
+        return fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class));
     }
 
     @Override
