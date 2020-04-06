@@ -55,7 +55,7 @@ active-account-url: ${local-url}/api/user/activate-account
 file-service:
   local: /home/workspace/data
   url-pattern: /file/**
-  url-prefix: ${local-url}/file/
+  url-prefix: ${local-url}/api/file/get/
 
 
 public-key: /home/workspace/key/public

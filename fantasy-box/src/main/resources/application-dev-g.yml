@@ -53,7 +53,7 @@ logging:
 file-service:
   local: /Users/gyue/fantasy-box/data/
   url-pattern: /file/**
-  url-prefix: ${local-url}/file/
+  url-prefix: ${local-url}/api/file/get/
 
 local-url: http://localhost:${server.port}
 active-account-url: ${local-url}/api/user/activate-account
