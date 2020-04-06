@@ -15,8 +15,8 @@ spring:
       initialize-schema: always
   mail:
     host: smtp.163.com
-    username: {邮箱名称}
-    password: {邮箱授权码}
+    username: gyue15@163.com
+    password: gaoyuenju0917
     default-encoding: UTF-8
     port: 465
     properties:
@@ -51,13 +51,12 @@ logging:
     cn.edu.nju.fantasybox.mapper: debug
 
 file-service:
-  local: file:/Users/gyue/fantasy-box/data/
+  local: /Users/gyue/fantasy-box/data/
   url-pattern: /file/**
-  url-prefix: http://localhost:8080/file/
+  url-prefix: ${local-url}/file/
 
-local-url: Http://localhost:8080
+local-url: http://localhost:${server.port}
 active-account-url: ${local-url}/api/user/activate-account
-
 
 public-key: /Users/gyue/fantasy-box/key/public
 private-key: /Users/gyue/fantasy-box/key/private
