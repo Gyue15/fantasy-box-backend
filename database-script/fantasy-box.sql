@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 06/04/2020 23:07:47
+ Date: 06/04/2020 23:26:33
 */
 
 SET NAMES utf8mb4;
@@ -44,7 +44,7 @@ CREATE TABLE `product` (
   `user_avatar` varchar(255) DEFAULT NULL,
   `cover_url` varchar(255) DEFAULT NULL,
   `release_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `p_user_id` (`user_id`),
   CONSTRAINT `p_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
