@@ -11,6 +11,7 @@
         <result property="avatarUrl" jdbcType="VARCHAR" column="avatar_url"/>
         <result property="token" jdbcType="VARCHAR" column="token"/>
         <result property="activated" jdbcType="BIT" column="activated"/>
+        <result property="uploadFileUrl" jdbcType="VARCHAR" column="upload_file_url"/>
     </resultMap>
 
     <select id="select" resultMap="UserResultMap">
@@ -49,7 +50,6 @@
             <if test="qrCodeUrl!=null">qr_code_url=#{qrCodeUrl},</if>
             <if test="avatarUrl!=null">avatar_url=#{avatarUrl},</if>
             <if test="token!=null">token=#{token},</if>
-            <if test="activated!=null">activated=#{activated},</if>
         </trim>
         WHERE id=#{id}
     </update>

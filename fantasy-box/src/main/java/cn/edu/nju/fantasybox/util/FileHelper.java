@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.UUID;
 
 @Component
 public class FileHelper {
@@ -35,7 +36,29 @@ public class FileHelper {
         return str;
     }
 
-    private String addUrlPrefix(String rawUrl) {
+    public void getFile(String filePath, OutputStream outputStream) {
+        File file = new File(localPath + filePath);
+        FileInputStream inputStream = null;
+        if (!(file.exists() && file.canRead())) {
+            throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
+        }
+        try {
+            inputStream = new FileInputStream(file);
+            byte[] buffer = new byte[20 * 1024];
+            int cnt;
+            while ((cnt = inputStream.read(buffer, 0, buffer.length)) != -1) {
+                outputStream.write(buffer, 0, cnt);
+            }
+            outputStream.flush();
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            logger.error("context", e);
+            throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
+        }
+    }
+
+    public String addUrlPrefix(String rawUrl) {
         return rawUrl != null ? urlPrefix + rawUrl : null;
     }
 
@@ -53,13 +76,20 @@ public class FileHelper {
     }
 
     public String saveFile(MultipartFile file) {
-        // 文件保存路径
-        String filePath = this.localPath + System.currentTimeMillis() + file.getOriginalFilename();
-        // 文件url
-        String fileUrl = System.currentTimeMillis() + file.getOriginalFilename();
         if (file.isEmpty()) {
             throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
         }
+        // 文件url
+        String fileName = file.getOriginalFilename();
+        int suffixIndex;
+        if (fileName == null || (suffixIndex = fileName.lastIndexOf(".")) == -1) {
+            fileName = UUID.randomUUID().toString();
+        } else {
+            fileName = UUID.randomUUID().toString() + fileName.substring(suffixIndex).toLowerCase();
+        }
+        String fileUrl =  fileName;
+        // 文件保存路径
+        String filePath = this.localPath + fileUrl;
         File dest = new File(filePath);
         // 检测是否存在目录
         if (!dest.getParentFile().exists() && !dest.getParentFile().mkdirs()) {

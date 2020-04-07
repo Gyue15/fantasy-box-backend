@@ -1,7 +1,7 @@
 package cn.edu.nju.fantasybox.controller;
 
 import cn.edu.nju.fantasybox.configuration.annotation.Authentication;
-import cn.edu.nju.fantasybox.model.*;
+import cn.edu.nju.fantasybox.model.ResponseData;
 import cn.edu.nju.fantasybox.service.ProductService;
 import cn.edu.nju.fantasybox.util.ResponseDataUtil;
 import org.slf4j.Logger;
@@ -56,6 +56,20 @@ public class ProductController {
         logger.info(httpSession.getId());
         long userId = (Long) httpSession.getAttribute("userId");
         return ResponseDataUtil.buildSuccess(productService.postProduct(file, cover, description, title, tags, userId));
+    }
+
+    @PostMapping("post")
+    @Authentication
+    public ResponseData postProduct(@RequestParam("file-token") String fileToken,
+                                    @RequestParam("cover-token") String coverToken,
+                                    @RequestParam("description") String description,
+                                    @RequestParam("title") String title, @RequestParam("tags") List<String> tags,
+                                    HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        logger.info(httpSession.getId());
+        long userId = (Long) httpSession.getAttribute("userId");
+        return ResponseDataUtil.buildSuccess(productService.postProduct(fileToken, coverToken, description, title,
+                tags, userId));
     }
 
     @GetMapping("get-my-product")

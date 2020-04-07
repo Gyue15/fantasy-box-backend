@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 06/04/2020 17:13:18
+ Date: 06/04/2020 23:26:33
 */
 
 SET NAMES utf8mb4;
@@ -44,40 +44,28 @@ CREATE TABLE `product` (
   `user_avatar` varchar(255) DEFAULT NULL,
   `cover_url` varchar(255) DEFAULT NULL,
   `release_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `p_user_id` (`user_id`),
   CONSTRAINT `p_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
 BEGIN;
-INSERT INTO `product` VALUES (1, 'p1', 1, 'localhost:8080/file/img.jpg', 'djhf', NULL, NULL, NULL, '2020-02-11 18:10:08', '2020-02-11 18:10:12');
-INSERT INTO `product` VALUES (2, 'pro1', 2, 'fu1', 'des1', 'test01', 'au2', NULL, '2020-02-11 19:42:13', '2020-02-11 19:42:13');
-INSERT INTO `product` VALUES (4, 'pro2', 2, 'fu2', 'des2', 'test01', 'au2', NULL, '2020-02-11 19:48:07', '2020-02-11 19:48:07');
-INSERT INTO `product` VALUES (5, 'pro3', 2, 'fu3', 'des3', 'test01', 'au2', NULL, '2020-02-11 19:52:13', '2020-02-11 19:52:13');
-INSERT INTO `product` VALUES (6, 'pro3', 2, 'fu3', 'des3', 'test01', 'au2', NULL, '2020-02-11 19:53:19', '2020-02-11 19:53:19');
-INSERT INTO `product` VALUES (7, 'pro3', 2, 'fu3', 'des3', 'test01', 'au2', NULL, '2020-02-11 19:53:49', '2020-02-11 19:53:49');
-INSERT INTO `product` VALUES (9, 'pro3', 2, 'fu3', 'des3', 'test01', 'au2', NULL, '2020-02-11 20:00:19', '2020-02-11 20:00:19');
-INSERT INTO `product` VALUES (10, 't1', 1, 'http://localhost:8080/file/1581427562797Head First设计模式.fdf', 'akgkfgaga', 'test00', 'au1', NULL, '2020-02-11 21:26:02', '2020-02-11 21:26:02');
-INSERT INTO `product` VALUES (11, 't1', 21, '1581763852752_最好的工具和最锐利的武器_晚年恩格斯眼中的唯物辩证法_郝立新.pdf', 'akgkfgaga', 'gyue', '15817696736231512651510758头像.png', NULL, '2020-02-15 18:50:52', '2020-02-15 20:27:53');
-INSERT INTO `product` VALUES (12, 't1', 21, '158176459728810.1.1.727.5538.pdf', 'akgkfgaga', 'gyue', '15817696736231512651510758头像.png', NULL, '2020-02-15 19:03:17', '2020-02-15 20:27:53');
-INSERT INTO `product` VALUES (14, '光环5:守护者', 21, '1586161769796u=1496033420,824293380&fm=26&gp=0.jpg', 'akgkfgaga', 'gyue', '15817696736231512651510758头像.png', '1586161769796u=1496033420,824293380&fm=26&gp=0.jpg', '2020-04-06 16:29:29', '2020-04-06 16:29:29');
-INSERT INTO `product` VALUES (15, '刺客信条：启示录', 21, '1586162064201刺客信条.jpg', '刺客信条', 'gyue', '15817696736231512651510758头像.png', '1586162064201刺客信条.jpg', '2020-04-06 16:34:24', '2020-04-06 16:34:24');
-INSERT INTO `product` VALUES (16, '天龙八部', 21, '1586162170918天龙八部.jpg', '天龙八部，段誉篇', 'gyue', '15817696736231512651510758头像.png', '1586162170918天龙八部.jpg', '2020-04-06 16:36:10', '2020-04-06 16:36:10');
-INSERT INTO `product` VALUES (17, '实况足球', 21, '1586162248202实况足球.jpg', '实况足球', 'gyue', '15817696736231512651510758头像.png', '1586162248202实况足球.jpg', '2020-04-06 16:37:28', '2020-04-06 16:37:28');
-INSERT INTO `product` VALUES (18, '龙珠z：终极之战', 21, '1586162310926龙珠.jpg', '七龙珠的游戏', 'gyue', '15817696736231512651510758头像.png', '1586162310926龙珠.jpg', '2020-04-06 16:38:30', '2020-04-06 16:38:30');
-INSERT INTO `product` VALUES (19, '只狼：影逝二度', 21, '1586162435908只狼.jpg', '只狼', 'gyue', '15817696736231512651510758头像.png', '1586162435908只狼.jpg', '2020-04-06 16:40:35', '2020-04-06 16:40:35');
-INSERT INTO `product` VALUES (20, '稻草', 21, '1586162514304151299011837613.jpg', '自然图片', 'gyue', '15817696736231512651510758头像.png', '1586162514304151299011837613.jpg', '2020-04-06 16:41:54', '2020-04-06 16:41:54');
-INSERT INTO `product` VALUES (21, '多啦A梦', 21, '15861625613771512961614113002.jpg', '动画片', 'gyue', '15817696736231512651510758头像.png', '15861625613771512961614113002.jpg', '2020-04-06 16:42:41', '2020-04-06 16:42:41');
-INSERT INTO `product` VALUES (22, '狗狗', 21, '15861625882161512988358298018.jpg', '可爱的小狗狗', 'gyue', '15817696736231512651510758头像.png', '15861625882161512988358298018.jpg', '2020-04-06 16:43:08', '2020-04-06 16:43:08');
-INSERT INTO `product` VALUES (23, '猫猫', 21, '15861626208061512988408544012.jpg', '可爱的小猫猫', 'gyue', '15817696736231512651510758头像.png', '15861626208061512988408544012.jpg', '2020-04-06 16:43:40', '2020-04-06 16:43:40');
-INSERT INTO `product` VALUES (24, '紫萝兰永恒花园', 21, '1586163582964u=843151289,2305239344&fm=15&gp=0.jpg', '紫萝兰永恒花园，动画', 'gyue', '15817696736231512651510758头像.png', '1586163582964u=843151289,2305239344&fm=15&gp=0.jpg', '2020-04-06 16:59:42', '2020-04-06 16:59:42');
-INSERT INTO `product` VALUES (25, '这个杀手不太冷', 21, '1586163681529杀手.jpg', '这个杀手不太冷', 'gyue', '15817696736231512651510758头像.png', '1586163681529杀手.jpg', '2020-04-06 17:01:21', '2020-04-06 17:01:21');
-INSERT INTO `product` VALUES (26, '卓别林摩登时代', 21, '1586163946731卓别林.jpg', '《摩登时代》（Modern Times），是查理·卓别林（Charles Chaplin）导演并主演的一部经典喜剧电影，于1936年2月25日上映。\n本片故事发生在美国20世纪30年代经济萧条时期，工人查理（卓别林饰）在工厂干活、发疯、进入精神病院，这一切都是与当时的经济危机给人们带来的生存危机有着密切的联系。而在艰难的生活中，查理和孤女相濡以沫，场面温馨感人焕发着人性的光辉。\n这部《摩登时代》被认为是美国电影史上最伟大的电影之一，也是查理·卓别林最著名的作品之一。', 'gyue', '15817696736231512651510758头像.png', '1586163946731卓别林.jpg', '2020-04-06 17:05:46', '2020-04-06 17:05:46');
-INSERT INTO `product` VALUES (27, '加里波利', 21, 'file-1586164129105ggg.jpg', '每年的4月25日，澳大利亚和新西兰都会共享一个特别重要的公众假日：ANZAC DAY，即澳新军团日（也译作澳纽军团日）。\n在这个节日里，学校会纷纷举办各种主题学习，商场里徽章红花出售。而遍布于各城市的战争纪念馆，则是举办隆重的节日纪念仪式，对市民进行日常爱国教育的最重要基地。', 'gyue', '15817696736231512651510758头像.png', 'cover-1586164129105ggg.jpg', '2020-04-06 17:08:49', '2020-04-06 17:08:49');
+INSERT INTO `product` VALUES (20, '稻草', 21, '1586162514304151299011837613.jpg', '自然图片', 'gyue', '15817696736231512651510758.png', '1586162514304151299011837613.jpg', '2020-04-06 16:41:54', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (21, '多啦A梦', 21, '15861625613771512961614113002.jpg', '动画片', 'gyue', '15817696736231512651510758.png', '15861625613771512961614113002.jpg', '2020-04-06 16:42:41', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (22, '狗狗', 21, '15861625882161512988358298018.jpg', '可爱的小狗狗', 'gyue', '15817696736231512651510758.png', '15861625882161512988358298018.jpg', '2020-04-06 16:43:08', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (23, '猫猫', 21, '15861626208061512988408544012.jpg', '可爱的小猫猫', 'gyue', '15817696736231512651510758.png', '15861626208061512988408544012.jpg', '2020-04-06 16:43:40', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (24, '紫萝兰永恒花园', 21, '1586163582964u=843151289,2305239344&fm=15&gp=0.jpg', '紫萝兰永恒花园，动画', 'gyue', '15817696736231512651510758.png', '1586163582964u=843151289,2305239344&fm=15&gp=0.jpg', '2020-04-06 16:59:42', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (27, '加里波利', 21, 'file-1586164129105ggg.jpg', '每年的4月25日，澳大利亚和新西兰都会共享一个特别重要的公众假日：ANZAC DAY，即澳新军团日（也译作澳纽军团日）。\n在这个节日里，学校会纷纷举办各种主题学习，商场里徽章红花出售。而遍布于各城市的战争纪念馆，则是举办隆重的节日纪念仪式，对市民进行日常爱国教育的最重要基地。', 'gyue', '15817696736231512651510758.png', 'cover-1586164129105ggg.jpg', '2020-04-06 17:08:49', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (28, '兔子', 21, '50bbbbb3-860c-426f-980b-2ea6557382b2.jpg', '兔子门', 'gyue', '15817696736231512651510758.png', 'e71e847c-ea0a-457d-8ef2-4b3d5140d3ac.jpg', '2020-04-06 21:54:33', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (29, '刺客信条', 21, 'b8e0b332-ab66-42c9-a70f-1ca829585e9c.jpg', '《刺客信条》是由育碧蒙特利尔工作室研发的动作冒险类游戏系列，主要角色有阿泰尔、康纳、艾吉奥，于2007年发行第一部，游戏平台为PS3、PC和PSP。 \n该游戏系列是以超高的自由度和精美的画面作为最大卖点的动作类游戏。玩家将在每部游戏中控制一名刺客，通过在任务中巧妙穿插重要的历史人物及历史事件带给玩家深沉的代入感。', 'gyue', '15817696736231512651510758.png', 'a3e46fbb-fa0e-46e0-abaf-71c0c47f3737.jpg', '2020-04-06 22:49:40', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (30, '实况足球', 21, '9bb45c07-b18a-4004-b52b-ef77908cac10.jpg', '《实况足球》，由KONAMI制作开发的一款足球游戏，于1996年正式发行。\n《实况足球》是为了满足广大足球爱好者和球迷的需求，精心打造的一款3D游戏。游戏画面效果逼真，操作简单，深受广大足球爱好者和球迷的喜爱。\n2017年8月19日，英格兰传奇球星贝克汉姆成为《实况足球2018》宣传大使，成为实况传奇球员的一员。', 'gyue', '15817696736231512651510758.png', 'f70192c4-ade7-416e-949d-75413cbbc94f.jpg', '2020-04-06 22:51:02', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (32, '天龙八部', 21, '5cbb224d-15ad-438e-a679-28748b1d801a.jpg', '《天龙八部》是由搜狐畅游研发的一款武侠角色扮演网游，于2007年4月4日在中国发行。该游戏改编自金庸先生的同名小说，并得到了金庸先生的正式授权。\n《天龙八部》是由搜狐畅游公司投入巨额资金，历时三年精心自主研发的武侠网游大作，极尽精良的美术制作、人性化的功能设计、忠实原著的剧情副本、新奇丰富的技能系统、贴心的珍兽及帮派系统等诸多新颖多元的玩点，为玩家塑造出和谐完美的虚拟武侠社区世界，带来精彩的游戏体验。', 'gyue', '15817696736231512651510758.png', 'e9316555-4e27-46fe-9446-ad65447a617c.jpg', '2020-04-06 22:52:50', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (33, '只狼：影逝二度', 21, '608b65f1-85fb-4f89-b494-60334c1ce44c.jpg', '在《Sekiro: Shadows Die Twice》中，一个名誉不再、伤痕累累的忍者，一个从死亡边缘捡回一命的战士。你效忠守护继承古老血统的年轻御子，与危险的苇名一族以及众多凶恶之徒为敌。年轻的御子被抓走后，为挽回荣誉，你将不畏死亡，踏上危机四伏的征程。\n探索生死冲突不断的16世纪后期，感受残酷的日本战国时代，在黑暗、扭曲的世界，与威胁生命的敌人对峙。活用义手装备各种致命武器，大显忍者身手，在血腥对抗中潜行、上下穿梭，与敌人正面激烈交锋。\n复仇雪耻。夺回荣誉。巧妙杀敌。 ', 'gyue', '15817696736231512651510758.png', '3827a9d9-a4aa-41b9-aa8d-266e77b40854.jpg', '2020-04-06 22:54:40', '2020-04-06 22:56:52');
+INSERT INTO `product` VALUES (34, '龙珠Z：终极之战', 21, '82e35fd0-a25e-4d1e-82d7-ff0e7f2d24b8.jpg', 'NBGI所推出的系列最新作，游戏的日版预计将于2014年1月23日发售，美版将于1月28日上市，而欧版的发售日则为1月24日，其对应平台为PS3、XBOX 360和PSV。\n开发商Namco Bandai连续几天公布了多批《龙珠Z：终极之战》截图，同时他们也透露了游戏中的4种战斗模式。在这4种模式中，全世界的玩家们可以进行对抗或者合作游戏。最多支持8人乱斗。', 'gyue', '15817696736231512651510758.png', '973a0fe1-cedf-4539-a82f-57a80767f405.jpg', '2020-04-06 23:03:39', '2020-04-06 23:03:39');
 COMMIT;
 
 -- ----------------------------
@@ -102,8 +90,7 @@ CREATE TABLE `SPRING_SESSION` (
 -- Records of SPRING_SESSION
 -- ----------------------------
 BEGIN;
-INSERT INTO `SPRING_SESSION` VALUES ('c6e4bcff-8b7f-46de-8495-a390fd19068a', '3fa65ad8-1b5a-4743-96cc-420d9d636991', 1586163510178, 1586164129026, 1800, 1586165929026, NULL);
-INSERT INTO `SPRING_SESSION` VALUES ('c9b3fc0e-0eea-4335-b724-68a26f507f11', 'ab9563bf-f7f7-48e7-8300-b43b8d1d1f73', 1586161317999, 1586163306173, 1800, 1586165106173, NULL);
+INSERT INTO `SPRING_SESSION` VALUES ('858ea805-0295-4322-994d-ee2934148cb1', '5960e94c-d9ed-43cf-8a5e-87568c14c776', 1586184472686, 1586185419425, 1800, 1586187219425, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -122,10 +109,8 @@ CREATE TABLE `SPRING_SESSION_ATTRIBUTES` (
 -- Records of SPRING_SESSION_ATTRIBUTES
 -- ----------------------------
 BEGIN;
-INSERT INTO `SPRING_SESSION_ATTRIBUTES` VALUES ('c6e4bcff-8b7f-46de-8495-a390fd19068a', 'isLogin', 0xACED0005737200116A6176612E6C616E672E426F6F6C65616ECD207280D59CFAEE0200015A000576616C7565787001);
-INSERT INTO `SPRING_SESSION_ATTRIBUTES` VALUES ('c6e4bcff-8b7f-46de-8495-a390fd19068a', 'userId', 0xACED00057372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000015);
-INSERT INTO `SPRING_SESSION_ATTRIBUTES` VALUES ('c9b3fc0e-0eea-4335-b724-68a26f507f11', 'isLogin', 0xACED0005737200116A6176612E6C616E672E426F6F6C65616ECD207280D59CFAEE0200015A000576616C7565787001);
-INSERT INTO `SPRING_SESSION_ATTRIBUTES` VALUES ('c9b3fc0e-0eea-4335-b724-68a26f507f11', 'userId', 0xACED00057372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000015);
+INSERT INTO `SPRING_SESSION_ATTRIBUTES` VALUES ('858ea805-0295-4322-994d-ee2934148cb1', 'isLogin', 0xACED0005737200116A6176612E6C616E672E426F6F6C65616ECD207280D59CFAEE0200015A000576616C7565787001);
+INSERT INTO `SPRING_SESSION_ATTRIBUTES` VALUES ('858ea805-0295-4322-994d-ee2934148cb1', 'userId', 0xACED00057372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000015);
 COMMIT;
 
 -- ----------------------------
@@ -140,45 +125,23 @@ CREATE TABLE `tag` (
   UNIQUE KEY `tag_content` (`tag_name`,`product_id`),
   KEY `tag_product_id` (`product_id`),
   CONSTRAINT `tag_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tag
 -- ----------------------------
 BEGIN;
-INSERT INTO `tag` VALUES (48, 'akgf', 10);
-INSERT INTO `tag` VALUES (78, 'akgf', 12);
-INSERT INTO `tag` VALUES (47, 'akh', 10);
-INSERT INTO `tag` VALUES (77, 'akh', 12);
-INSERT INTO `tag` VALUES (46, 'kdah', 10);
-INSERT INTO `tag` VALUES (76, 'kdah', 12);
-INSERT INTO `tag` VALUES (6, 'tag1', 1);
-INSERT INTO `tag` VALUES (45, 'tag10', 1);
-INSERT INTO `tag` VALUES (7, 'tag2', 1);
-INSERT INTO `tag` VALUES (8, 'tag3', 1);
-INSERT INTO `tag` VALUES (9, 'tag4', 1);
-INSERT INTO `tag` VALUES (10, 'tag5', 1);
-INSERT INTO `tag` VALUES (41, 'tag6', 1);
-INSERT INTO `tag` VALUES (42, 'tag7', 1);
-INSERT INTO `tag` VALUES (43, 'tag8', 1);
-INSERT INTO `tag` VALUES (44, 'tag9', 1);
-INSERT INTO `tag` VALUES (57, '呃呃呃', 12);
-INSERT INTO `tag` VALUES (55, '啊', 12);
-INSERT INTO `tag` VALUES (56, '嗷嗷', 12);
 INSERT INTO `tag` VALUES (87, '图片', 20);
 INSERT INTO `tag` VALUES (88, '图片', 21);
 INSERT INTO `tag` VALUES (89, '图片', 22);
 INSERT INTO `tag` VALUES (90, '图片', 23);
-INSERT INTO `tag` VALUES (91, '好玩的', 19);
-INSERT INTO `tag` VALUES (81, '游戏', 14);
-INSERT INTO `tag` VALUES (82, '游戏', 15);
-INSERT INTO `tag` VALUES (83, '游戏', 16);
-INSERT INTO `tag` VALUES (84, '游戏', 17);
-INSERT INTO `tag` VALUES (85, '游戏', 18);
-INSERT INTO `tag` VALUES (86, '游戏', 19);
+INSERT INTO `tag` VALUES (96, '图片', 28);
+INSERT INTO `tag` VALUES (97, '游戏', 29);
+INSERT INTO `tag` VALUES (98, '游戏', 30);
+INSERT INTO `tag` VALUES (100, '游戏', 32);
+INSERT INTO `tag` VALUES (101, '游戏', 33);
+INSERT INTO `tag` VALUES (102, '游戏', 34);
 INSERT INTO `tag` VALUES (92, '视频', 24);
-INSERT INTO `tag` VALUES (93, '视频', 25);
-INSERT INTO `tag` VALUES (94, '视频', 26);
 INSERT INTO `tag` VALUES (95, '视频', 27);
 COMMIT;
 
@@ -204,10 +167,8 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'test00', 'asdfghj', 'test@123.com', 'qru1', 'au1', NULL, NULL);
-INSERT INTO `user` VALUES (2, 'test01', '123456', 'test@456.com', 'qru2', 'au2', NULL, NULL);
 INSERT INTO `user` VALUES (20, 'wxy', 'dW2rKu+At4+jVNmTKxmhQGhfqlco1LPkM8nWL8YZqlr7SijSR3yeZNVeOW99Ml4F0X6YVRDSNItHmsvxTslh1D0yJwt6ZNFsUV6eonEqNCAK/nlZ/V/bbyLyBt11Xep0uGjmt3Lj/uoKo13KUFPeQMhXID6Qg5JVDorfqHRK1KU=', 'shea_wong@163.com', NULL, NULL, 'eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjAsInN0YSI6MTU4MTc1NjQ4NTAzNywiZXhwIjoxNTgxODQyODg1MDM3fQ.zvxijJ8oefAvnlTfKO_og3O-nuidOK-6bgFBfU5gBlQ', b'1');
-INSERT INTO `user` VALUES (21, 'gyue', 'cnemCoT73JXZrNhI1lkSxY165p+gVjZzws0mEVAPka0UhRZ+ROcoMi/Dil3N1tw3vpdMXb/9lNJndfc70MvNrw0WpHL1eaynYD1HzhWA8NUBalqZch/VeqpigkwrRoXSzPspfrtejbIFswkPiRWQTdrGp2dr6m/DRLqgfVC8bzQ=', '786330297@qq.com', '1581771034187151298848818108.jpg', '15817696736231512651510758头像.png', 'eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjAsInN0YSI6MTU4MTc1NzAyNzgwNiwiZXhwIjoxNTgxODQzNDI3ODA2fQ.D8aUtBJ9bJOpDS7v91v9eHPO1kENF53SVZBENwd3H14', b'1');
+INSERT INTO `user` VALUES (21, 'gyue', 'cnemCoT73JXZrNhI1lkSxY165p+gVjZzws0mEVAPka0UhRZ+ROcoMi/Dil3N1tw3vpdMXb/9lNJndfc70MvNrw0WpHL1eaynYD1HzhWA8NUBalqZch/VeqpigkwrRoXSzPspfrtejbIFswkPiRWQTdrGp2dr6m/DRLqgfVC8bzQ=', '786330297@qq.com', '1581771034187151298848818108.jpg', '15817696736231512651510758.png', 'eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjAsInN0YSI6MTU4MTc1NzAyNzgwNiwiZXhwIjoxNTgxODQzNDI3ODA2fQ.D8aUtBJ9bJOpDS7v91v9eHPO1kENF53SVZBENwd3H14', b'1');
 INSERT INTO `user` VALUES (22, 'test000', 'gbNjhKDHRredz+M02yXieYQpNibsDJ4eGm4bcrp2sF5jOanu5m44IuGadNPrM5cSBfME97Tu17C5orTx/mX8fYKfWwg/iVdjgIPKFYOAyJpbQl7MQ2T9UNj8/wYVstPGqJXroDh0IyQUSAdNcfke50doxt24pGD32jO/CbAR3/M=', 'testtest@123.com', NULL, NULL, 'eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjAsInN0YSI6MTU4NjA1ODg4NDkwOSwiZXhwIjoxNTg2MTQ1Mjg0OTA5fQ.TtHMvIOEX2j8_zCIPXw3GBpnchI0zfrhcCrWSfmMbd8', b'0');
 COMMIT;
 
