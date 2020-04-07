@@ -1,4 +1,4 @@
-#gy本地开发环境的配置文件
+#xkl本地开发环境的配置文件
 
 server:
   port: 8080
@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     username: root
-    password:
+    password: 123456
     url: jdbc:mysql://localhost:3306/fantasy-box?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
   #    driver-class-name: com.mysql.jdbc.Driver
   session:
@@ -51,19 +51,23 @@ logging:
     cn.edu.nju.fantasybox.mapper: debug
 
 file-service:
-  local: D:/Program/Code/fantasy-box-backend/data/
+  local: D://software-engineer/fantasy-box/data/
   url-pattern: /file/**
   url-prefix: ${local-url}/file/
+
+#file-service:
+#  local: D://software-engineer/fantasy-box/data/
+#  url-pattern: /file/**
+#  url-prefix: ${local-url}/api/file/get/
 
 local-url: Http://localhost:8080
 active-account-url: ${local-url}/api/user/activate-account
 
 
-public-key: D:/Program/Code/fantasy-box-backend/key/public
-private-key: D:/Program/Code/fantasy-box-backend/key/private
+public-key: D://software-engineer/fantasy-box/key/public
+private-key: D://software-engineer/fantasy-box/key/private
 
 hot-num: 9
 
-#仅开发环境下绕过权限验证用
-cross-authentication: true
+cross-authentication: false
 testUser: 22

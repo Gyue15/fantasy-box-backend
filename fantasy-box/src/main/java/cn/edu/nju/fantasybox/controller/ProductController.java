@@ -47,10 +47,11 @@ public class ProductController {
 
     @PostMapping("post-product")
     @Authentication
-    public ResponseData postProduct(@RequestParam("file") MultipartFile file,
+    public ResponseData postProduct(@RequestParam("title") String title,
+                                    @RequestParam("file") MultipartFile file,
                                     @RequestParam("cover") MultipartFile cover,
                                     @RequestParam("description") String description,
-                                    @RequestParam("title") String title, @RequestParam("tags") List<String> tags,
+                                    @RequestParam("tags") List<String> tags,
                                     HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
         logger.info(httpSession.getId());

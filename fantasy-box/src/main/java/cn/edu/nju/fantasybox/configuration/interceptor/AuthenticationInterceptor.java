@@ -16,7 +16,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Value("${cross-authentication}")
     private boolean crossAuthentication;
     @Value("${testUser}")
-    private String testUser;
+    private Long testUser;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
