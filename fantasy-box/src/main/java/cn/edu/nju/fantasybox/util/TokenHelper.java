@@ -6,6 +6,8 @@ import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import net.minidev.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -23,6 +25,9 @@ public class TokenHelper {
      */
     private static final byte[] secret = ("g3YGj2ufiyeqkytrahgfy72861ksla9L").getBytes();
 
+    private final Logger logger = LoggerFactory.getLogger(TokenHelper.class);
+
+
     public String getToken(long userId) {
         String token = "";
 //        token= JWT.create().withAudience(Long.toString(user.getId()))// 将 user id 保存到 token 里面
@@ -37,7 +42,7 @@ public class TokenHelper {
         try {
             token = createToken(map);
         } catch (JOSEException e) {
-            e.printStackTrace();
+            logger.error("context",e);
         }
         return token;
     }

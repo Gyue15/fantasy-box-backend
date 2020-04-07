@@ -55,6 +55,15 @@ public class FileHelper {
         } catch (IOException e) {
             logger.error("context", e);
             throw new BusinessException(ResultEnums.FILE_NOT_FOUND);
+        }finally {
+            try {
+                if(inputStream!=null){
+                    inputStream.close();
+                }
+                outputStream.close();
+            } catch (IOException e) {
+                logger.error("context",e);
+            }
         }
     }
 

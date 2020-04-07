@@ -9,16 +9,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.HashMap;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class MailHelperTest {
-    @Autowired
+//    @Autowired
     private MailHelper mailHelper;
 
-    @Autowired
+//    @Autowired
     private FreemarkerHelper freemarkerHelper;
 
-    @Test
+    public MailHelperTest(MailHelper mailHelper, FreemarkerHelper freemarkerHelper) {
+        this.mailHelper = mailHelper;
+        this.freemarkerHelper = freemarkerHelper;
+    }
+
+//    @Test
     public void testSendHtmlMail() {
         Map<String, Object> map = new HashMap<>();
         map.put("code", "abcdefg");
