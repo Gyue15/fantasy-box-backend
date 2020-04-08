@@ -15,6 +15,10 @@ public class ResponseDataUtil {
         return new ResponseData(ResultEnums.SUCCESS, data);
     }
 
+    public static ResponseData buildStringSuccess(String str) {
+        return new ResponseData(ResultEnums.SUCCESS, str);
+    }
+
     public static ResponseData buildSuccess() {
         return new ResponseData(ResultEnums.SUCCESS);
     }

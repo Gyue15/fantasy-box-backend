@@ -43,7 +43,7 @@ public class UserController {
     public ResponseData getMyQRCode(HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
         long userId = (Long) httpSession.getAttribute("userId");
-        return ResponseDataUtil.buildSuccess(this.userService.getUser(userId).getQrCodeUrl());
+        return ResponseDataUtil.buildStringSuccess(this.userService.getUser(userId).getQrCodeUrl());
     }
 
     @PostMapping("register")
