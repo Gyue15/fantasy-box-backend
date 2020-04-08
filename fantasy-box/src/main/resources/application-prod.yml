@@ -67,5 +67,5 @@ private-key: /home/workspace/key/private
 hot-num: 9
 
 #仅开发环境下绕过权限验证用
-cross-authentication: false
-testUser: 0
+cross-authentication: true
+testUser: 21

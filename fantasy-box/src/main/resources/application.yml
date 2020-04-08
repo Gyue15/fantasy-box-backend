@@ -1,4 +1,4 @@
 #选择配置文件
 spring:
   profiles:
-    active: dev-z
+    active: prod

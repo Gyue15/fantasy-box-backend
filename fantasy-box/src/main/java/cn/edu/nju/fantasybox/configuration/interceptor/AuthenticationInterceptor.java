@@ -21,6 +21,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                              Object object) {
+        System.out.println(httpServletRequest.getRequestURI());
         // 如果不是映射到方法直接通过
         if (!(object instanceof HandlerMethod)) {
             return true;
