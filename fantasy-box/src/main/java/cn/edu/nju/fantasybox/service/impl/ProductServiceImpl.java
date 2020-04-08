@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +36,12 @@ public class ProductServiceImpl implements ProductService {
     private final FileHelper fileHelper;
 
     private static final String HOT = "热门";
+
+    private static final String[] OFFICIAL_TAGS = {"热门", "图片", "游戏", "视频"};
+
+    private static final String OTHER = "其他";
+
+    private static final String[] ALL_TAGS = {"热门", "图片", "游戏", "视频", "其他"};
 
     @Value("${file-service.local}")
     private String localPath;
@@ -70,6 +73,11 @@ public class ProductServiceImpl implements ProductService {
         List<String> tags = tagMapper.selectAllByCount();
         // 找到这些标签对应的产品
         List<ProductEntity> entities = productMapper.findProductByTagList(tags);
+        entities.forEach(productEntity -> {
+            if (Arrays.binarySearch(OFFICIAL_TAGS, productEntity.getSelectTag()) == -1) {
+                productEntity.setSelectTag(OTHER);
+            }
+        });
         Map<String, List<ProductModel>> modelMap = new HashMap<>(tags.size());
         entities.forEach(productEntity -> {
             List<ProductModel> modelList = modelMap.getOrDefault(productEntity.getSelectTag(), new ArrayList<>());
@@ -78,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
             modelList.add(model);
             modelMap.put(productEntity.getSelectTag(), modelList);
         });
-        tags.forEach(tag -> productList.add(new ProductListModel(tag, modelMap.get(tag))));
+        Arrays.stream(ALL_TAGS).forEach(tag -> productList.add(new ProductListModel(tag, modelMap.get(tag))));
         System.out.println(modelMap);
         return productList;
     }
