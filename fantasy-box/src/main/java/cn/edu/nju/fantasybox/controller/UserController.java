@@ -38,6 +38,14 @@ public class UserController {
         return ResponseDataUtil.buildSuccess(this.userService.getUser(id));
     }
 
+    @GetMapping("get-my-qr-code")
+    @Authentication
+    public ResponseData getMyQRCode(HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        long userId = (Long) httpSession.getAttribute("userId");
+        return ResponseDataUtil.buildSuccess(this.userService.getUser(userId).getQrCodeUrl());
+    }
+
     @PostMapping("register")
     public ResponseData register(String username, String password, String email) {
         logger.info("username: " + username + " password:" + password + " email: " + email);

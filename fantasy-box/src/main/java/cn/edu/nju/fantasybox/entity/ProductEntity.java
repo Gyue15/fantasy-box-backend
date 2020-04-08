@@ -31,4 +31,6 @@ public class ProductEntity {
     private List<TagEntity> tagList;
 
     private String selectTag;
+
+    private String qrCode;
 }

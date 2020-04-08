@@ -28,4 +28,6 @@ public class ProductModel {
 
     private List<String> tagList;
 
+    private String qrCode;
+
 }

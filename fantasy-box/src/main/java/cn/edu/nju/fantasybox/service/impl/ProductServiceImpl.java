@@ -65,7 +65,11 @@ public class ProductServiceImpl implements ProductService {
         // 添加热门产品
         List<ProductEntity> hotEntities = productMapper.findHotProduct(hotNum);
         List<ProductModel> hotModels = new ArrayList<>();
-        hotEntities.forEach(productEntity -> hotModels.add(dozerBeanMapper.map(productEntity, ProductModel.class)));
+        hotEntities.forEach(productEntity -> {
+            String qrCode = userMapper.select(productEntity.getUserId()).getQrCodeUrl();
+            productEntity.setQrCode(qrCode);
+            hotModels.add(dozerBeanMapper.map(productEntity, ProductModel.class));
+        });
         hotModels.forEach(fileHelper::addUrlPrefix);
         productList.add(new ProductListModel(HOT, hotModels));
 
@@ -77,17 +81,26 @@ public class ProductServiceImpl implements ProductService {
             if (Arrays.binarySearch(OFFICIAL_TAGS, productEntity.getSelectTag()) == -1) {
                 productEntity.setSelectTag(OTHER);
             }
+            String qrCode = userMapper.select(productEntity.getUserId()).getQrCodeUrl();
+            productEntity.setQrCode(qrCode);
+//            System.out.println(qrCode);
         });
         Map<String, List<ProductModel>> modelMap = new HashMap<>(tags.size());
         entities.forEach(productEntity -> {
             List<ProductModel> modelList = modelMap.getOrDefault(productEntity.getSelectTag(), new ArrayList<>());
+            if (productEntity.getUserId() == 20) {
+                System.out.println("entity: " + productEntity.getQrCode());
+            }
             ProductModel model = dozerBeanMapper.map(productEntity, ProductModel.class);
             fileHelper.addUrlPrefix(model);
+            if (productEntity.getUserId() == 20) {
+                System.out.println("model: " + model.getQrCode());
+            }
             modelList.add(model);
             modelMap.put(productEntity.getSelectTag(), modelList);
         });
         Arrays.stream(ALL_TAGS).forEach(tag -> productList.add(new ProductListModel(tag, modelMap.get(tag))));
-        System.out.println(modelMap);
+//        System.out.println(modelMap);
         return productList;
     }
 
@@ -98,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
         if (entity == null) {
             return null;
         }
+        entity.setQrCode(userMapper.select(entity.getUserId()).getQrCodeUrl());
         ProductModel model = dozerBeanMapper.map(entity, ProductModel.class);
         fileHelper.addUrlPrefix(model);
         return model;
@@ -109,7 +123,10 @@ public class ProductServiceImpl implements ProductService {
         if (productEntities == null) {
             return null;
         }
-        return productEntities.stream().map(productEntity -> fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class))).collect(Collectors.toList());
+        return productEntities.stream().map(productEntity -> {
+            productEntity.setQrCode(userMapper.select(productEntity.getUserId()).getQrCodeUrl());
+            return fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class));
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -154,7 +171,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductModel> search(List<String> keywords) {
-        List<ProductEntity> productEntityList = productMapper.search(keywords);
-        return productEntityList.stream().map(productEntity -> fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class))).collect(Collectors.toList());
+        List<ProductEntity> productEntities = productMapper.search(keywords);
+        return productEntities.stream().map(productEntity -> {
+            productEntity.setQrCode(userMapper.select(productEntity.getUserId()).getQrCodeUrl());
+            return fileHelper.addUrlPrefix(dozerBeanMapper.map(productEntity, ProductModel.class));
+        }).collect(Collectors.toList());
     }
 }

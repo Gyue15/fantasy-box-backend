@@ -75,6 +75,7 @@ public class FileHelper {
         productModel.setFileUrl(addUrlPrefix(productModel.getFileUrl()));
         productModel.setImgUrl(addUrlPrefix(productModel.getImgUrl()));
         productModel.setUserAvatar(addUrlPrefix(productModel.getUserAvatar()));
+        productModel.setQrCode(addUrlPrefix(productModel.getQrCode()));
         return productModel;
     }
 
