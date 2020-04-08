@@ -109,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
                                     List<String> tags, long userId) {
         // 保存文件，获取文件url
         String fileUrl = fileHelper.saveFile(file);
-        String coverUrl = fileHelper.saveFile(file);
+        String coverUrl = fileHelper.saveFile(cover);
         return postProduct(fileUrl, coverUrl, description, title, tags, userId);
 
     }

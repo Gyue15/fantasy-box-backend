@@ -47,12 +47,11 @@ public class ProductController {
 
     @PostMapping("post-product")
     @Authentication
-    public ResponseData postProduct(@RequestParam("title") String title,
-                                    @RequestParam("file") MultipartFile file,
+    public ResponseData postProduct(@RequestParam("file") MultipartFile file,
                                     @RequestParam("cover") MultipartFile cover,
+                                    @RequestParam("title") String title,
                                     @RequestParam("description") String description,
-                                    @RequestParam("tags") List<String> tags,
-                                    HttpServletRequest request) {
+                                    @RequestParam("tags") List<String> tags, HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
         logger.info(httpSession.getId());
         long userId = (Long) httpSession.getAttribute("userId");
@@ -86,5 +85,4 @@ public class ProductController {
         String[] keywordList = keywords.trim().split("\\s+");
         return ResponseDataUtil.buildSuccess(productService.search(Arrays.asList(keywordList)));
     }
-
 }
