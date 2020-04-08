@@ -15,7 +15,7 @@ spring:
   mail:
     host: smtp.163.com
     username:
-    password: 
+    password:
     default-encoding: UTF-8
     port: 465
     properties:

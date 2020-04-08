@@ -28,7 +28,7 @@ public class FileServiceImpl implements FileService {
 
     private String[] pics = {".jpg", ".jpeg", ".png", ".gif"};
 
-    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     private FileHelper fileHelper;
 

@@ -9,14 +9,14 @@ import cn.edu.nju.fantasybox.service.UserService;
 import cn.edu.nju.fantasybox.util.*;
 import com.nimbusds.jose.JOSEException;
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
     private final RSAEncrypt rsaEncrypt;
 
     private final FileHelper fileHelper;
+
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     @Value("${active-account-url}")
     private String activeAccountUrl;
@@ -114,7 +117,7 @@ public class UserServiceImpl implements UserService {
         try {
             tokenHelper.verifyToken(token);
         } catch (ParseException | JOSEException e) {
-            e.printStackTrace();
+            logger.error("context",e);
         }
         long userId = userEntity.getId();
         userEntity = new UserEntity();

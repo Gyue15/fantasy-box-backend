@@ -1,5 +1,7 @@
 package cn.edu.nju.fantasybox.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,7 @@ public class MailHelper {
     @Value("${spring.mail.host}")
     private String host;
 
+    private final Logger logger = LoggerFactory.getLogger(MailHelper.class);
 
     /**
      * 发送邮件
@@ -59,7 +62,7 @@ public class MailHelper {
             transport.sendMessage(message, message.getAllRecipients());//发送邮件,其中第二个参数是所有已设好的收件人地址
             transport.close();
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.error("context",e);
         }
 
     }

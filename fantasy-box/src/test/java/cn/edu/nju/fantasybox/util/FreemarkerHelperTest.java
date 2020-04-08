@@ -9,12 +9,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.HashMap;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class FreemarkerHelperTest {
-    @Autowired
+//    @Autowired
     private FreemarkerHelper freemarkerHelper;
-    @Test
+
+    public FreemarkerHelperTest(FreemarkerHelper freemarkerHelper) {
+        this.freemarkerHelper = freemarkerHelper;
+    }
+
+    //    @Test
     public void testGetTemplateText(){
         Map<String,Object> map = new HashMap<>();
         map.put("id",9287);
