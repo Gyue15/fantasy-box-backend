@@ -68,4 +68,4 @@ hot-num: 9
 
 #仅开发环境下绕过权限验证用
 cross-authentication: true
-testUser: 21
+testUser: 20
