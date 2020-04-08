@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
     private static final String OTHER = "其他";
 
-    private static final String[] ALL_TAGS = {"热门", "图片", "游戏", "视频", "其他"};
+    private static final String[] ALL_TAGS = {"图片", "游戏", "视频", "其他"};
 
     @Value("${file-service.local}")
     private String localPath;
